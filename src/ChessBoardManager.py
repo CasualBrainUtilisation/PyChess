@@ -52,6 +52,12 @@ class FieldHandler: #class that handles all the fields of a chess board
                 chessBoard.canvas.create_rectangle(chessBoard.CELLSIZE * column, chessBoard.CELLSIZE * row, chessBoard.CELLSIZE * (column + 1), chessBoard.CELLSIZE * (row + 1), fill = FieldHandler.COLORS[(row+column) % 2]); #create a rectangle add the current position, with the correct field color, on the chessBoard's canvas
                 
 
+class PieceVisualisation: #class that will handle the images, showing the chessPieces on the board
+    #TODO piece Visualisatoin logic
+    pass;
+    
+                
+
 
 class BoardPos: #class that stores a position on the chessBoard
     def __init__(self, x: int, y: int) -> None: 
