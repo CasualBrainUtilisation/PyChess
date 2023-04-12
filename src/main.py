@@ -9,12 +9,4 @@ window = Tk(); # create the main window
 
 
 
-
-
-
-
-
-
-
-
 window.mainloop();
