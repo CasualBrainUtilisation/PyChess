@@ -1,4 +1,5 @@
 from tkinter import *; #import the tkinter module
+import FEN; #needed to load pieces from FEN
 
 class ChessBoard:
     #consts
@@ -12,9 +13,11 @@ class ChessBoard:
         self.CELLSIZE = CELLSIZE;
         
         #board Parts
-        self.fieldHandler: FieldHandler = FieldHandler(); #class that handles all the fields on the chessBoard
+        self.__fieldHandler: FieldHandler = FieldHandler(self); #class that handles all the fields on the chessBoard
+        self.__pieceVisualisation: PieceVisualisation = PieceVisualisation(self); #class that handles the visual representation of the current pieces
         
-        pass
+        #pieces
+        self.pieces = FEN.LoadPositionFromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"); #self.pieces represents the pieces currently on the board (they store their pos theirself), here we set it to the normal start posiiton
     
     def createBoard(self): #method that creates a canvas on the self.window, that'll contain the chessBoard
         
@@ -25,14 +28,13 @@ class ChessBoard:
         
         
         #call methods of the classes handling things like fields and pieces, to set them up
-        self.fieldHandler.createBoardFields(self); #creates the fields for the chessBoard
-        
-        pass;
+        self.__fieldHandler.createBoardFields(); #creates the fields for the chessBoard
+        self.__pieceVisualisation.createImages(); #creates the images, which will show the pieces, for first those will be blank
     
     def boardClicked(self, event): #mehtod that'll be called every time the user clicks on a field on the chessBoard
         
         #calculate the field the user clicked on
-        print(str(event.x // self.CELLSIZE) + "|" + str(event.y // self.CELLSIZE))
+        print(str(event.x // self.CELLSIZE) + "|" + str(event.y // self.CELLSIZE));
         
     
     
@@ -41,20 +43,40 @@ class FieldHandler: #class that handles all the fields of a chess board
     #consts
     COLORS: tuple = ("white", "black") #colors used for the fields on the board
     
-    def __init__(self) -> None:
-        pass
+    def __init__(self, chessBoard: ChessBoard) -> None:
+        #from def
+        self.__chessBoard = chessBoard;
+        
+        pass;
     
-    def createBoardFields(self, chessBoard: ChessBoard): #method that'll create the fields for a chessBoard on given chessBoard
+    def createBoardFields(self): #method that'll create the fields for the self.chessBoard
         
         #cycle through the whole board and add the field backgrounds
         for row in range(ChessBoard.ROWS):
             for column in range(ChessBoard.COLUMNS):
-                chessBoard.canvas.create_rectangle(chessBoard.CELLSIZE * column, chessBoard.CELLSIZE * row, chessBoard.CELLSIZE * (column + 1), chessBoard.CELLSIZE * (row + 1), fill = FieldHandler.COLORS[(row+column) % 2]); #create a rectangle add the current position, with the correct field color, on the chessBoard's canvas
+                self.__chessBoard.canvas.create_rectangle(self.__chessBoard.CELLSIZE * column, self.__chessBoard.CELLSIZE * row, self.__chessBoard.CELLSIZE * (column + 1), self.__chessBoard.CELLSIZE * (row + 1), fill = FieldHandler.COLORS[(row+column) % 2]); #create a rectangle add the current position, with the correct field color, on the chessBoard's canvas
                 
 
 class PieceVisualisation: #class that will handle the images, showing the chessPieces on the board
-    #TODO piece Visualisatoin logic
-    pass;
+    def __init__(self, chessBoard: ChessBoard) -> None:
+        
+        #from def
+        self.__chessBoard = chessBoard;
+        
+    def createImages(self): #method, that adds a blank image on each chessBoard Field, that later'll show an image of a piece, if the field contains one
+        
+        self.pieceImages = []; #this variable will store all the created piece Images, which later'll be used to show the pieces on the board
+        
+        #cycle through the whole board and add the blank images to the canvas
+        for row in range(ChessBoard.ROWS):
+            
+            self.pieceImages.append([]); #add a row to the self.pieceImages
+            
+            for column in range(ChessBoard.COLUMNS):
+                
+                pieceImage = PhotoImage();
+                self.__chessBoard.canvas.create_image(self.__chessBoard.CELLSIZE * column, self.__chessBoard.CELLSIZE * row, anchor = "nw", image = pieceImage);
+                
     
                 
 
