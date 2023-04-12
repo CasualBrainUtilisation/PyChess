@@ -54,14 +54,16 @@ class FieldHandler: #class that handles all the fields of a chess board
 
 
 class BoardPos: #class that stores a position on the chessBoard
-    def __init__(self, x: int, y: int) -> bool: #returns false if the given position is not on the board, else returns true
-        
-        if (x < 0 or x >= ChessBoard.COLUMNS or y < 0 or y >= ChessBoard.ROWS):
-            return False;
+    def __init__(self, x: int, y: int) -> None: 
         
         self.x = x;
         self.y = y;
         
-        return True;
+       
+    
+def IsPosValid(pos: BoardPos) -> bool: #returns false if the given position is not on the board, else returns true
+    if (pos.x < 0 or pos.x >= ChessBoard.COLUMNS or pos.y < 0 or pos.y >= ChessBoard.ROWS):
+        return False;
+    return True;
                 
                 

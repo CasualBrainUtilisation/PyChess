@@ -27,7 +27,7 @@ def LoadPositionFromFEN(FEN: str) -> list: #method that'll return a list of piec
         
         if (curChar.isalpha()): #if the currently checked character is only made of letters continue here
             
-            if (BoardPos(column,row) == False): #if the currently checked position is not valid, but there is a letter there, the FEN is invalid, so we'll return null
+            if (IsPosValid(BoardPos(column,row)) == False): #if the currently checked position is not valid, but there is a letter there, the FEN is invalid, so we'll return null
                 return None;
             
             pos: BoardPos = BoardPos(column, row); #get the currently checked position
