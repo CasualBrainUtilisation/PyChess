@@ -1,13 +1,14 @@
-
+from tkinter import *; #import the tkinter module
 
 class ChessBoard:
     #consts
     ROWS: int = 8; #amount of rows on the chessBoard
     COLUMNS: int = 8; #amount of columns on the chessBoard
     
-    def __init__(self, CELLSIZE: int) -> None:
+    def __init__(self, WINDOW: Tk, CELLSIZE: int) -> None:
         #from def
         #consts
+        self.WINDOW = WINDOW;
         self.CELLSIZE = CELLSIZE;
         
         #board Parts
@@ -17,7 +18,11 @@ class ChessBoard:
     
     def createBoard(self): #method that creates a canvas on the self.window, that'll contain the chessBoard
         
-        #cycle through the whole board and add the field backgrounds
+        self.canvas = Canvas(self.WINDOW, width = self.CELLSIZE * ChessBoard.COLUMNS, height = self.CELLSIZE * ChessBoard.ROWS) #setup a canvas where field, pieces  ect. can be placed on
+        self.canvas.pack(); # add the canvas to the window
+        
+        #call methods of the classes handling things like fields and pieces, to set them up
+        self.fieldHandler.createBoardFields(self); #creates the fields for the chessBoard
         
         pass;
     
@@ -31,5 +36,8 @@ class FieldHandler: #class that handles all the fields of a chess board
         pass
     
     def createBoardFields(self, chessBoard: ChessBoard): #method that'll create the fields for a chessBoard on given chessBoard
-        #TODO fieldCreation logic
-        pass
+        
+        #cycle through the whole board and add the field backgrounds
+        for row in ChessBoard.ROWS:
+            for column in ChessBoard.COLUMNS:
+                chessBoard.canvas.create_rectangle(chessBoard.CELLSIZE * column, chessBoard.CELLSIZE * row, chessBoard.CELLSIZE * (column + 1), chessBoard.CELLSIZE * (row + 1));
