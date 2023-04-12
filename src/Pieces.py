@@ -24,6 +24,8 @@ class Rook(ChessPiece):
         #TODO logic to get moves
         return [super().pos];
     
+    
+    
 class Bishop(ChessPiece):
     def __init__(self, pos: BoardPos, color: Color) -> None:
         super().__init__(pos, color);
@@ -31,6 +33,7 @@ class Bishop(ChessPiece):
     def getMoves(chessBoard: ChessBoard) -> list:
         #TODO logic to get moves
         return [super().pos];
+    
     
 
 class Queen(ChessPiece):
@@ -41,6 +44,8 @@ class Queen(ChessPiece):
         #TODO logic to get moves
         return [super().pos];  
     
+    
+    
 class Pawn(ChessPiece):
     def __init__(self, pos: BoardPos, color: Color) -> None:
         super().__init__(pos, color);
@@ -49,6 +54,8 @@ class Pawn(ChessPiece):
         #TODO logic to get moves
         return [super().pos]; 
     
+    
+    
 class King(ChessPiece):
     def __init__(self, pos: BoardPos, color: Color) -> None:
         super().__init__(pos, color);
@@ -56,6 +63,8 @@ class King(ChessPiece):
     def getMoves(chessBoard: ChessBoard) -> list:
         #TODO logic to get moves
         return [super().pos];
+    
+    
     
 class Knight(ChessPiece):
     def __init__(self, pos: BoardPos, color: Color) -> None:
