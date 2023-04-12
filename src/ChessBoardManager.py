@@ -80,12 +80,12 @@ class PieceVisualisation: #class that will handle the images, showing the chessP
                 pieceImage = PhotoImage(file = "src\\images\\pieces\\bb.png"); #create a blank imgae
                 
                 canvasIMG = self.__chessBoard.canvas.create_image(self.__chessBoard.CELLSIZE * column, self.__chessBoard.CELLSIZE * row, anchor = "nw", image = pieceImage);
-                self.pieceImages[row].append(canvasIMG); #add the image to the board and referernce it in the  pieceImages list
+                self.pieceImages[row].append((canvasIMG, pieceImage)); #add the image to the board and referernce it in the  pieceImages list
                 
     def updatePieceImages(self) -> None: #method that'll update the pieceImages, to show the current chessBoard.pieces
         for piece in self.__chessBoard.pieces: #update the pieceImages prpoerly, for all the pieces in the chessBoard.pieces list
             img = PhotoImage(file = "src\\images\\pieces\\bb.png")
-            self.__chessBoard.canvas.itemconfig(self.pieceImages[piece.pos.y][piece.pos.x], image = img);
+            self.__chessBoard.canvas.itemconfig(self.pieceImages[piece.pos.y][piece.pos.x][0], image = img);
             
                 
     
