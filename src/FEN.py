@@ -28,6 +28,7 @@ def LoadPositionFromFEN(FEN: str) -> list: #method that'll return a list of piec
         if (curChar.isalpha()): #if the currently checked character is only made of letters continue here
             
             if (IsPosValid(BoardPos(column,row)) == False): #if the currently checked position is not valid, but there is a letter there, the FEN is invalid, so we'll return null
+                print("letter at invalid pos at " + "ind : " + str(index) + " pos : " + str(row) + "|" + str(column))
                 return None;
             
             pos: BoardPos = BoardPos(column, row); #get the currently checked position
@@ -47,10 +48,11 @@ def LoadPositionFromFEN(FEN: str) -> list: #method that'll return a list of piec
             elif curChar.lower() == "p": #check if the currenlty checked charater is a Pawn
                 pieces.append(Pawn(pos, curChar.islower())) #add a Pawn at the currenlty checked position
                 
-            elif curChar.lower() == "b": #check if the currenlty checked charater is a Knight
+            elif curChar.lower() == "n": #check if the currenlty checked charater is a Knight
                 pieces.append(Knight(pos, curChar.islower())) #add a Knight at the currenlty checked position
                 
             else:
+                print("invalid letter at " + "ind : " + str(index) + " pos : " + str(row) + "|" + str(column))
                 return None; #the character wasn't valid, so the FEN is invalid, we'll return None
         
         elif curChar.isnumeric(): #if the currenctly checked character is a number, we'll add that to the currently checked column (that's how FENs work)
@@ -61,6 +63,7 @@ def LoadPositionFromFEN(FEN: str) -> list: #method that'll return a list of piec
             row += 1;
             
         if (row > ChessBoard.ROWS or column > ChessBoard.COLUMNS): #row or column values equal ROWS or COLUMNS are normal as the '/' comes directly after them, if they are bigger though, the FEN is invalid, return None
+            print ("row/col over 8 at " + "ind : " + str(index) + " pos : " + str(row) + "|" + str(column))
             return None;
 
         index += 1; #increase the index, so we'll check the next character

@@ -10,5 +10,7 @@ from ChessBoardManager import *;
 chessBoardManager = ChessBoard(window, 60);
 chessBoardManager.createBoard();
 
+import FEN;
+print(FEN.LoadPositionFromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"));
 
 window.mainloop();
