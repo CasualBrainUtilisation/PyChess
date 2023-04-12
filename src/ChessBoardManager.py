@@ -51,4 +51,17 @@ class FieldHandler: #class that handles all the fields of a chess board
             for column in range(ChessBoard.COLUMNS):
                 chessBoard.canvas.create_rectangle(chessBoard.CELLSIZE * column, chessBoard.CELLSIZE * row, chessBoard.CELLSIZE * (column + 1), chessBoard.CELLSIZE * (row + 1), fill = FieldHandler.COLORS[(row+column) % 2]); #create a rectangle add the current position, with the correct field color, on the chessBoard's canvas
                 
+
+
+class BoardPos: #class that stores a position on the chessBoard
+    def __init__(self, x: int, y: int) -> bool: #returns false if the given position is not on the board, else returns true
+        
+        if (x < 0 or x >= ChessBoard.COLUMNS or y < 0 or y >= ChessBoard.ROWS):
+            return False;
+        
+        self.x = x;
+        self.y = y;
+        
+        return True;
+                
                 
