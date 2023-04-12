@@ -40,4 +40,6 @@ class FieldHandler: #class that handles all the fields of a chess board
         #cycle through the whole board and add the field backgrounds
         for row in range(ChessBoard.ROWS):
             for column in range(ChessBoard.COLUMNS):
-                chessBoard.canvas.create_rectangle(chessBoard.CELLSIZE * column, chessBoard.CELLSIZE * row, chessBoard.CELLSIZE * (column + 1), chessBoard.CELLSIZE * (row + 1));
+                chessBoard.canvas.create_rectangle(chessBoard.CELLSIZE * column, chessBoard.CELLSIZE * row, chessBoard.CELLSIZE * (column + 1), chessBoard.CELLSIZE * (row + 1), fill = FieldHandler.COLORS[(row+column) % 2]); #create a rectangle add the current position, with the correct field color, on the chessBoard's canvas
+                
+                
