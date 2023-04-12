@@ -21,10 +21,17 @@ class ChessBoard:
         self.canvas = Canvas(self.WINDOW, width = self.CELLSIZE * ChessBoard.COLUMNS, height = self.CELLSIZE * ChessBoard.ROWS) #setup a canvas where field, pieces  ect. can be placed on
         self.canvas.pack(); # add the canvas to the window
         
+        self.canvas.bind("<Button-1>", self.boardClicked); #add the boardClicked event listener, so something happens if the user clicks on the chessBoard
+        
+        
         #call methods of the classes handling things like fields and pieces, to set them up
         self.fieldHandler.createBoardFields(self); #creates the fields for the chessBoard
         
         pass;
+    
+    def boardClicked(self, event): #mehtod that'll be called every time the user clicks on a field on the chessBoard
+        print("u clicked a field");
+        
     
     
 
