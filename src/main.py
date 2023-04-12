@@ -5,8 +5,10 @@ from tkinter import *; #import tkinter
 
 window: Tk = Tk(); # create the main window
 
-
-
+#Chess game setup
+from ChessBoardManager import *;
+chessBoardManager = ChessBoard(window, 60);
+chessBoardManager.createBoard();
 
 
 window.mainloop();

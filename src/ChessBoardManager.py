@@ -38,6 +38,6 @@ class FieldHandler: #class that handles all the fields of a chess board
     def createBoardFields(self, chessBoard: ChessBoard): #method that'll create the fields for a chessBoard on given chessBoard
         
         #cycle through the whole board and add the field backgrounds
-        for row in ChessBoard.ROWS:
-            for column in ChessBoard.COLUMNS:
+        for row in range(ChessBoard.ROWS):
+            for column in range(ChessBoard.COLUMNS):
                 chessBoard.canvas.create_rectangle(chessBoard.CELLSIZE * column, chessBoard.CELLSIZE * row, chessBoard.CELLSIZE * (column + 1), chessBoard.CELLSIZE * (row + 1));
