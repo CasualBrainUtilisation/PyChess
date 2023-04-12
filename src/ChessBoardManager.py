@@ -77,7 +77,7 @@ class PieceVisualisation: #class that will handle the images, showing the chessP
             
             for column in range(ChessBoard.COLUMNS):
                 
-                pieceImage = PhotoImage(file = "src\\images\\pieces\\bb.png"); #create a blank imgae
+                pieceImage = PhotoImage(); #create a blank imgae
                 
                 canvasIMG = self.__chessBoard.canvas.create_image(self.__chessBoard.CELLSIZE * column, self.__chessBoard.CELLSIZE * row, anchor = "nw", image = pieceImage);
                 self.pieceImages[row].append([canvasIMG, pieceImage]); #add the image to the board and referernce it in the  pieceImages list, also referenece the PhotoImage, to show the PhotoImage, you always have to keep a reference for some reason (took me a decade to figure out)
