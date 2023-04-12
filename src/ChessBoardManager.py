@@ -17,7 +17,7 @@ class ChessBoard:
     
     def createBoard(self): #method that creates a canvas on the self.window, that'll contain the chessBoard
         
-        #cycly through the whole board and add the field backgrounds
+        #cycle through the whole board and add the field backgrounds
         
         pass;
     
