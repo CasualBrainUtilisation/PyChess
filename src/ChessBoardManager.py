@@ -30,7 +30,9 @@ class ChessBoard:
         pass;
     
     def boardClicked(self, event): #mehtod that'll be called every time the user clicks on a field on the chessBoard
-        print("u clicked a field");
+        
+        #calculate the field the user clicked on
+        print(str(event.x // self.CELLSIZE) + "|" + str(event.y // self.CELLSIZE))
         
     
     
