@@ -3,7 +3,7 @@
 #window setup
 from tkinter import *; #import tkinter
 
-window = Tk(); # create the main window
+window: Tk = Tk(); # create the main window
 
 
 
