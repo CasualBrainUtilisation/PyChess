@@ -16,9 +16,14 @@ class ChessBoard:
         self.__fieldHandler: FieldHandler = FieldHandler(self); #class that handles all the fields on the chessBoard
         self.__pieceVisualisation: PieceVisualisation = PieceVisualisation(self); #class that handles the visual representation of the current pieces
         
+        #setup the chessBoard Visuals
+        self.createBoard();
+        
         #pieces
         self.pieces = FEN.LoadPositionFromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"); #self.pieces represents the pieces currently on the board (they store their pos theirself), here we set it to the normal start posiiton
-    
+        self.__pieceVisualisation.updatePieceImages(); #update the piece images to show the just loaded start position
+        
+        
     def createBoard(self): #method that creates a canvas on the self.window, that'll contain the chessBoard
         
         self.canvas = Canvas(self.WINDOW, width = self.CELLSIZE * ChessBoard.COLUMNS, height = self.CELLSIZE * ChessBoard.ROWS) #setup a canvas where field, pieces  ect. can be placed on
@@ -49,7 +54,7 @@ class FieldHandler: #class that handles all the fields of a chess board
         
         pass;
     
-    def createBoardFields(self): #method that'll create the fields for the self.chessBoard
+    def createBoardFields(self) -> None: #method that'll create the fields for the self.chessBoard
         
         #cycle through the whole board and add the field backgrounds
         for row in range(ChessBoard.ROWS):
@@ -63,19 +68,25 @@ class PieceVisualisation: #class that will handle the images, showing the chessP
         #from def
         self.__chessBoard = chessBoard;
         
-    def createImages(self): #method, that adds a blank image on each chessBoard Field, that later'll show an image of a piece, if the field contains one
-        
-        self.pieceImages = []; #this variable will store all the created piece Images, which later'll be used to show the pieces on the board
+    def createImages(self) -> None: #method, that adds a blank image on each chessBoard Field, that later'll show an image of a piece, if the field contains one
+
+        self.pieceImages = [ [] for i in range(ChessBoard.ROWS)]; #this variable will store all the created piece Images, which later'll be used to show the pieces on the board
         
         #cycle through the whole board and add the blank images to the canvas
         for row in range(ChessBoard.ROWS):
             
-            self.pieceImages.append([]); #add a row to the self.pieceImages
-            
             for column in range(ChessBoard.COLUMNS):
                 
-                pieceImage = PhotoImage();
-                self.__chessBoard.canvas.create_image(self.__chessBoard.CELLSIZE * column, self.__chessBoard.CELLSIZE * row, anchor = "nw", image = pieceImage);
+                pieceImage = PhotoImage(file = "src\\images\\pieces\\bb.png"); #create a blank imgae
+                
+                canvasIMG = self.__chessBoard.canvas.create_image(self.__chessBoard.CELLSIZE * column, self.__chessBoard.CELLSIZE * row, anchor = "nw", image = pieceImage);
+                self.pieceImages[row].append(canvasIMG); #add the image to the board and referernce it in the  pieceImages list
+                
+    def updatePieceImages(self) -> None: #method that'll update the pieceImages, to show the current chessBoard.pieces
+        for piece in self.__chessBoard.pieces: #update the pieceImages prpoerly, for all the pieces in the chessBoard.pieces list
+            img = PhotoImage(file = "src\\images\\pieces\\bb.png")
+            self.__chessBoard.canvas.itemconfig(self.pieceImages[piece.pos.y][piece.pos.x], image = img);
+            
                 
     
                 

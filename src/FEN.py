@@ -3,6 +3,7 @@
 
 def LoadPositionFromFEN(FEN: str) -> list: #method that'll return a list of pieces, which can build a posiition loaded from given FEN on the chessBoard, it'll return None if the FEN is invalid
     
+    #notice that these imports where moved done here, to avoid circular import errors
     from ChessBoardManager import BoardPos, IsPosValid, ChessBoard; #needed to check for validation of the FEN and to create pieces at a position on the board
     from Pieces import Knight, Rook, Bishop, Queen, Pawn, King; #needed to return a list of pieces
     
