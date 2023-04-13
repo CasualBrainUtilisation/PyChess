@@ -24,9 +24,6 @@ class ChessBoard:
         self.pieces = FEN.LoadPositionFromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"); #self.pieces represents the pieces currently on the board (they store their pos theirself), here we set it to the normal start posiiton
         self.__pieceVisualisation.updatePieceImages(); #update the piece images to show the just loaded start position
         
-        for piece in self.pieces:
-            print(str(piece.pos.x) + "|" + str(piece.pos.y));
-        
         
     def createBoard(self): #method that creates a canvas on the self.window, that'll contain the chessBoard
         
