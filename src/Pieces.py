@@ -84,8 +84,11 @@ class Pawn(ChessPiece):
         super().__init__(pos, color, "p");
         
     def getMoves(self, chessBoard: ChessBoardManager.ChessBoard) -> list:
-        #TODO logic to get moves
-        return [self.pos];
+        
+        moves = []; #this list will later be returned and stores all the valid moves the piece has
+        
+        
+        return moves; #return the calculated moves
     
     
     
@@ -94,8 +97,11 @@ class King(ChessPiece):
         super().__init__(pos, color, "k");
         
     def getMoves(self, chessBoard: ChessBoardManager.ChessBoard) -> list:
-        #TODO logic to get moves
-        return [self.pos];
+        
+        moves = []; #this list will later be returned and stores all the valid moves the piece has
+        
+        
+        return moves; #return the calculated moves
     
     
     
@@ -104,8 +110,31 @@ class Knight(ChessPiece):
         super().__init__(pos, color, "n");
         
     def getMoves(self, chessBoard: ChessBoardManager.ChessBoard) -> list:
-        #TODO logic to get moves
-        return [self.pos];
+        
+        moves = [Move(self, ChessBoardManager.BoardPos(self.pos.x - 2, self.pos.y + 1), Move.MoveType.NORMAL),
+                 Move(self, ChessBoardManager.BoardPos(self.pos.x - 1, self.pos.y + 2), Move.MoveType.NORMAL),
+                 Move(self, ChessBoardManager.BoardPos(self.pos.x + 1, self.pos.y + 2), Move.MoveType.NORMAL),
+                 Move(self, ChessBoardManager.BoardPos(self.pos.x + 2, self.pos.y + 1), Move.MoveType.NORMAL),
+                 Move(self, ChessBoardManager.BoardPos(self.pos.x + 2, self.pos.y - 1), Move.MoveType.NORMAL),
+                 Move(self, ChessBoardManager.BoardPos(self.pos.x - 1, self.pos.y - 2), Move.MoveType.NORMAL),
+                 Move(self, ChessBoardManager.BoardPos(self.pos.x + 1, self.pos.y - 2), Move.MoveType.NORMAL),
+                 Move(self, ChessBoardManager.BoardPos(self.pos.x - 2, self.pos.y - 1), Move.MoveType.NORMAL),
+                 ]; #this list will later be returned and stores all the moves theoraticly possible for the knight, the ones actually invalid for different reasons, will be deleted throughout this method
+        
+        
+        for move in moves:
+            if not ChessBoardManager.IsPosValid(move.moveTo): #if the move actually leads out of the board remove it 
+                moves.remove(move); #remove the invalid move from the moves list
+                continue; #continue with the next move, so the checks below this are not executed
+            
+            piece: ChessPiece = chessBoard.getPieceAtPos(move.moveTo); #get the piece at the move.moveTo pos currently checked for validation
+            if piece is not None: #check wether the piece variable isn't empty, if so there must be a piece at the move.moveTo pos currently checked for validation
+                if piece.color == self.color: #check if the piece at the move.moveTo pos currently checked for validation has the same color as this piece, if so it's invalid, so remove it
+                    moves.remove(move); #remove the invalid move from the moves list
+                    continue; #continue with the next move, so the checks below this are not executed
+        
+        
+        return moves; #return the calculated moves
 
 
 
@@ -150,7 +179,7 @@ class Move: #class that stores move endPos and moveType aswell as the piece to m
         CASTLING = 3; #any castling move, needed to perform a given castling move properly
     
     
-    def __init__(self, piece: ChessPiece, moveTo: ChessBoardManager.BoardPos, moveType: int) -> None:
+    def __init__(self, piece: ChessPiece, moveTo: ChessBoardManager.BoardPos, moveType: MoveType) -> None:
         
         self.pieceToMove = piece; #the piece that'll be moved, when this move was performed
         self.moveTo = moveTo; #the position the given piece moves to
