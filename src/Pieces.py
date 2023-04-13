@@ -87,6 +87,18 @@ class Pawn(ChessPiece):
         
         moves = []; #this list will later be returned and stores all the valid moves the piece has
         
+        pawnDir = (-1,1) #the direction the pawn goes to (up/down), use the pieces color as index, to get the correct one for the related piece
+        
+        pieceInFront: ChessPiece = chessBoard.getPieceAtPos(ChessBoardManager.BoardPos(self.pos.x, self.pos.y + pawnDir[self.color.value])); #get the piece at the square in front of the pawn
+        if pieceInFront is None: #if there is no piece at the position in front of the pawn, add it to the moves list
+            moves.append(Move(self, ChessBoardManager.BoardPos(self.pos.x, self.pos.y + pawnDir[self.color.value]), Move.MoveType.NORMAL));
+            
+            #now we check if the pawn can perform a double move, notice that it can only ever do so, if it also can perform a single move
+            pieceTwoSquaresInFront =  chessBoard.getPieceAtPos(ChessBoardManager.BoardPos(self.pos.x, self.pos.y + pawnDir[self.color.value] * 2)); #get the piece two squares in front of the pawn
+            if pieceTwoSquaresInFront is None: #if there is no piece two squares in front of the pawn, add the move to the moves list
+                moves.append(Move(self, ChessBoardManager.BoardPos(self.pos.x, self.pos.y + pawnDir[self.color.value] * 2), Move.MoveType.DOUBLEPAWN));
+            
+        
         
         return moves; #return the calculated moves
     
