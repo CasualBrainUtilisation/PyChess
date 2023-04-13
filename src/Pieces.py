@@ -27,7 +27,7 @@ class Rook(ChessPiece):
         
         moves: list = []; #this list will contain all posibble moves and'll later be returned
             
-        #get the lien moves for each row the rook moves on
+        #get the line moves for each row and column the rook moves on
         moves.extend(getLineMoves(copy.copy(self.pos), 1, 0))
         moves.extend(getLineMoves(copy.copy(self.pos), -1, 0))
         moves.extend(getLineMoves(copy.copy(self.pos), 0, 1))
@@ -42,8 +42,16 @@ class Bishop(ChessPiece):
         super().__init__(pos, color, "bishop");
         
     def getMoves(self, chessBoard: ChessBoardManager.ChessBoard) -> list:
-        #TODO logic to get moves
-        return [self.pos];
+        
+        moves: list = []; #this list will contain all posibble moves and'll later be returned
+            
+        #get the line moves for each diagonal the bishop moves on
+        moves.extend(getLineMoves(copy.copy(self.pos), 1, 1))
+        moves.extend(getLineMoves(copy.copy(self.pos), -1, -1))
+        moves.extend(getLineMoves(copy.copy(self.pos), -1, 1))
+        moves.extend(getLineMoves(copy.copy(self.pos), 1, -1))
+        
+        return moves; #return the calculated moves
     
     
 
@@ -52,8 +60,22 @@ class Queen(ChessPiece):
         super().__init__(pos, color, "queen");
         
     def getMoves(self, chessBoard: ChessBoardManager.ChessBoard) -> list:
-        #TODO logic to get moves
-        return [self.pos];
+        
+        moves: list = []; #this list will contain all posibble moves and'll later be returned
+            
+        #get the line moves for each row and column the queen moves on
+        moves.extend(getLineMoves(copy.copy(self.pos), 1, 0))
+        moves.extend(getLineMoves(copy.copy(self.pos), -1, 0))
+        moves.extend(getLineMoves(copy.copy(self.pos), 0, 1))
+        moves.extend(getLineMoves(copy.copy(self.pos), 0, -1))
+        
+        #get the line moves for each diagonal the queen moves on
+        moves.extend(getLineMoves(copy.copy(self.pos), 1, 1))
+        moves.extend(getLineMoves(copy.copy(self.pos), -1, -1))
+        moves.extend(getLineMoves(copy.copy(self.pos), -1, 1))
+        moves.extend(getLineMoves(copy.copy(self.pos), 1, -1))
+        
+        return moves; #return the calculated moves
     
     
     
