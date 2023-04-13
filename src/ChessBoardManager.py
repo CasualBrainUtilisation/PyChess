@@ -51,6 +51,10 @@ class ChessBoard:
                 if (AreSamePos(clickedPos, move.moveTo)): #if the user clicked on a valid move-end position, perform given move
                     print("move will be performed");
                     
+                    import Pieces; #import the Pieces module to perform the move
+                    Pieces.performMove(self, move);
+                    self.__pieceVisualisation.updatePieceImages(); #update the pieceImages to show the current position
+                    
                     self.selectedPiece = None; #set the selectedPiece to None, as the selectedPiece should be unselected when moved
                     self.curValidMoves = []; #set the curValidMoves to an empty list, as there shouldn't be any, when reseting the selectedPiece
                     

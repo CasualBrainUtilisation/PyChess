@@ -114,6 +114,8 @@ class Knight(ChessPiece):
 def getLineMoves(chessBoard: ChessBoardManager.ChessBoard, pos: ChessBoardManager.BoardPos, xIncr: int, yIncr: int) -> list: #method that'll return all the moves on a line with given gradient, in a list
     
     moves = []; #list that'll be returned and contains all the possible moves on the line with given gradient
+    startPos = copy.copy(pos); #get a copy of the given position to store the startPos, which is needed to create Move classes, as we need the piece at the start position for that
+    
     
     #increase the values so the startPos is not on the moves list
     pos.x += xIncr;
@@ -121,7 +123,7 @@ def getLineMoves(chessBoard: ChessBoardManager.ChessBoard, pos: ChessBoardManage
     
     #check foreach pos on line if valid and if so add it to the moves list
     while (pos.x < ChessBoardManager.ChessBoard.COLUMNS and pos.x >= 0 and pos.y >= 0 and pos.y < ChessBoardManager.ChessBoard.ROWS): #check if the pos currently check for validation is even on the chessBoard
-        moves.append(Move(chessBoard.getPieceAtPos(pos), copy.copy(pos), Move.MoveType.NORMAL)); #add a copy of the pos to the move, a reference would be modified throughout the for loop, add the move to the later returned moves list, the move type is normal, as this is just a normal line move
+        moves.append(Move(chessBoard.getPieceAtPos(startPos), copy.copy(pos), Move.MoveType.NORMAL)); #add a copy of the pos to the move, a reference would be modified throughout the for loop, add the move to the later returned moves list, the move type is normal, as this is just a normal line move
         
         pos.x += xIncr;
         pos.y += yIncr;
@@ -130,7 +132,7 @@ def getLineMoves(chessBoard: ChessBoardManager.ChessBoard, pos: ChessBoardManage
     return moves; #finally return the moves list
 
 
-class Move: #class that stores move endPos and moveType, the move Type is quite important for performing moves like en passant and castling
+class Move: #class that stores move endPos and moveType aswell as the piece to move, the move Type is quite important for performing moves like en passant and castling
     
     class MoveType(Enum): #enum that represents the MoveType of the chessPiece
         NORMAL = 0; #by normal chess move that does not fall into the following categories
@@ -145,9 +147,8 @@ class Move: #class that stores move endPos and moveType, the move Type is quite 
         self.moveTo = moveTo; #the position the given piece moves to
         self.moveType = self.MoveType(moveType); #the type of move
 
-    pass;
 
-
-def performMove(move: Move): #method that'll perform given move
-    #TODO movePerform logic
-    pass;
+def performMove(chessBoard: ChessBoardManager.ChessBoard, move: Move): #method that'll perform given move
+    
+    if move.moveType == Move.MoveType.NORMAL: #if it is normal move, we'll just move the piece to the moveTo position
+        move.pieceToMove.pos = move.moveTo;
