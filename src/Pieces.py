@@ -41,9 +41,9 @@ class Bishop(ChessPiece):
     def __init__(self, pos: ChessBoardManager.BoardPos, color: Color) -> None:
         super().__init__(pos, color, "bishop");
         
-    def getMoves(chessBoard: ChessBoardManager.ChessBoard) -> list:
+    def getMoves(self, chessBoard: ChessBoardManager.ChessBoard) -> list:
         #TODO logic to get moves
-        return [super().pos];
+        return [self.pos];
     
     
 
@@ -51,9 +51,9 @@ class Queen(ChessPiece):
     def __init__(self, pos: ChessBoardManager.BoardPos, color: Color) -> None:
         super().__init__(pos, color, "queen");
         
-    def getMoves(chessBoard: ChessBoardManager.ChessBoard) -> list:
+    def getMoves(self, chessBoard: ChessBoardManager.ChessBoard) -> list:
         #TODO logic to get moves
-        return [super().pos];  
+        return [self.pos];
     
     
     
@@ -61,9 +61,9 @@ class Pawn(ChessPiece):
     def __init__(self, pos: ChessBoardManager.BoardPos, color: Color) -> None:
         super().__init__(pos, color, "pawn");
         
-    def getMoves(chessBoard: ChessBoardManager.ChessBoard) -> list:
+    def getMoves(self, chessBoard: ChessBoardManager.ChessBoard) -> list:
         #TODO logic to get moves
-        return [super().pos]; 
+        return [self.pos];
     
     
     
@@ -71,9 +71,9 @@ class King(ChessPiece):
     def __init__(self, pos: ChessBoardManager.BoardPos, color: Color) -> None:
         super().__init__(pos, color, "king");
         
-    def getMoves(chessBoard: ChessBoardManager.ChessBoard) -> list:
+    def getMoves(self, chessBoard: ChessBoardManager.ChessBoard) -> list:
         #TODO logic to get moves
-        return [super().pos];
+        return [self.pos];
     
     
     
@@ -81,9 +81,9 @@ class Knight(ChessPiece):
     def __init__(self, pos: ChessBoardManager.BoardPos, color: Color) -> None:
         super().__init__(pos, color, "knight");
         
-    def getMoves(chessBoard: ChessBoardManager.ChessBoard) -> list:
+    def getMoves(self, chessBoard: ChessBoardManager.ChessBoard) -> list:
         #TODO logic to get moves
-        return [super().pos];
+        return [self.pos];
 
 
 
