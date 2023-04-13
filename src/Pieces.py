@@ -98,7 +98,7 @@ def getLineMoves(pos: ChessBoardManager.BoardPos, xIncr: int, yIncr: int) -> lis
     pos.y += yIncr;
     
     #check foreach pos on line if valid and if so add it to the moves list
-    while (pos.x < ChessBoardManager.ChessBoard.COLUMNS and pos.x > 0 and pos.y > 0 and pos.y < ChessBoardManager.ChessBoard.ROWS):
+    while (pos.x < ChessBoardManager.ChessBoard.COLUMNS and pos.x >= 0 and pos.y >= 0 and pos.y < ChessBoardManager.ChessBoard.ROWS): #check if the pos currently check for validation is even on the chessBoard
         moves.append(pos);
         
         pos.x += xIncr;
