@@ -28,10 +28,10 @@ class Rook(ChessPiece):
         moves: list = []; #this list will contain all posibble moves and'll later be returned
             
         #get the line moves for each row and column the rook moves on
-        moves.extend(getLineMoves(copy.copy(self.pos), 1, 0))
-        moves.extend(getLineMoves(copy.copy(self.pos), -1, 0))
-        moves.extend(getLineMoves(copy.copy(self.pos), 0, 1))
-        moves.extend(getLineMoves(copy.copy(self.pos), 0, -1))
+        moves.extend(getLineMoves(chessBoard, copy.copy(self.pos), 1, 0))
+        moves.extend(getLineMoves(chessBoard, copy.copy(self.pos), -1, 0))
+        moves.extend(getLineMoves(chessBoard, copy.copy(self.pos), 0, 1))
+        moves.extend(getLineMoves(chessBoard, copy.copy(self.pos), 0, -1))
         
         return moves; #return the calculated moves
     
@@ -46,10 +46,10 @@ class Bishop(ChessPiece):
         moves: list = []; #this list will contain all posibble moves and'll later be returned
             
         #get the line moves for each diagonal the bishop moves on
-        moves.extend(getLineMoves(copy.copy(self.pos), 1, 1))
-        moves.extend(getLineMoves(copy.copy(self.pos), -1, -1))
-        moves.extend(getLineMoves(copy.copy(self.pos), -1, 1))
-        moves.extend(getLineMoves(copy.copy(self.pos), 1, -1))
+        moves.extend(getLineMoves(chessBoard, copy.copy(self.pos), 1, 1))
+        moves.extend(getLineMoves(chessBoard, copy.copy(self.pos), -1, -1))
+        moves.extend(getLineMoves(chessBoard, copy.copy(self.pos), -1, 1))
+        moves.extend(getLineMoves(chessBoard, copy.copy(self.pos), 1, -1))
         
         return moves; #return the calculated moves
     
@@ -64,16 +64,16 @@ class Queen(ChessPiece):
         moves: list = []; #this list will contain all posibble moves and'll later be returned
             
         #get the line moves for each row and column the queen moves on
-        moves.extend(getLineMoves(copy.copy(self.pos), 1, 0))
-        moves.extend(getLineMoves(copy.copy(self.pos), -1, 0))
-        moves.extend(getLineMoves(copy.copy(self.pos), 0, 1))
-        moves.extend(getLineMoves(copy.copy(self.pos), 0, -1))
+        moves.extend(getLineMoves(chessBoard, copy.copy(self.pos), 1, 0))
+        moves.extend(getLineMoves(chessBoard, copy.copy(self.pos), -1, 0))
+        moves.extend(getLineMoves(chessBoard, copy.copy(self.pos), 0, 1))
+        moves.extend(getLineMoves(chessBoard, copy.copy(self.pos), 0, -1))
         
         #get the line moves for each diagonal the queen moves on
-        moves.extend(getLineMoves(copy.copy(self.pos), 1, 1))
-        moves.extend(getLineMoves(copy.copy(self.pos), -1, -1))
-        moves.extend(getLineMoves(copy.copy(self.pos), -1, 1))
-        moves.extend(getLineMoves(copy.copy(self.pos), 1, -1))
+        moves.extend(getLineMoves(chessBoard, copy.copy(self.pos), 1, 1))
+        moves.extend(getLineMoves(chessBoard, copy.copy(self.pos), -1, -1))
+        moves.extend(getLineMoves(chessBoard, copy.copy(self.pos), -1, 1))
+        moves.extend(getLineMoves(chessBoard, copy.copy(self.pos), 1, -1))
         
         return moves; #return the calculated moves
     
@@ -111,7 +111,7 @@ class Knight(ChessPiece):
 
 
 #getting moves
-def getLineMoves(pos: ChessBoardManager.BoardPos, xIncr: int, yIncr: int) -> list: #method that'll return all the moves on a line with given gradient, in a list
+def getLineMoves(chessBoard: ChessBoardManager.ChessBoard, pos: ChessBoardManager.BoardPos, xIncr: int, yIncr: int) -> list: #method that'll return all the moves on a line with given gradient, in a list
     
     moves = []; #list that'll be returned and contains all the possible moves on the line with given gradient
     
@@ -121,7 +121,7 @@ def getLineMoves(pos: ChessBoardManager.BoardPos, xIncr: int, yIncr: int) -> lis
     
     #check foreach pos on line if valid and if so add it to the moves list
     while (pos.x < ChessBoardManager.ChessBoard.COLUMNS and pos.x >= 0 and pos.y >= 0 and pos.y < ChessBoardManager.ChessBoard.ROWS): #check if the pos currently check for validation is even on the chessBoard
-        moves.append(copy.copy(pos)); #add a copy of the pos to the moves list, a reference would be modified throughout the for loop
+        moves.append(Move(chessBoard.getPieceAtPos(pos), copy.copy(pos), Move.MoveType.NORMAL)); #add a copy of the pos to the move, a reference would be modified throughout the for loop, add the move to the later returned moves list, the move type is normal, as this is just a normal line move
         
         pos.x += xIncr;
         pos.y += yIncr;
@@ -139,7 +139,7 @@ class Move: #class that stores move endPos and moveType, the move Type is quite 
         CASTLING = 3; #any castling move, needed to perform a given castling move properly
     
     
-    def __init__(self, piece: ChessPiece, moveTo: ChessBoardManager.BoardPos, moveType: MoveType) -> None:
+    def __init__(self, piece: ChessPiece, moveTo: ChessBoardManager.BoardPos, moveType: int) -> None:
         
         self.pieceToMove = piece; #the piece that'll be moved, when this move was performed
         self.moveTo = moveTo; #the position the given piece moves to

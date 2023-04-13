@@ -47,8 +47,8 @@ class ChessBoard:
         clickedPos: BoardPos = BoardPos(event.x // self.CELLSIZE, event.y // self.CELLSIZE)
         
         if len(self.curValidMoves) > 0: #check if there are valid moves, the selected piece can do currently, if so we'll move the piece there, if the user clicked on a corresponding field
-            for pos in self.curValidMoves: #check foreach pos in curValidMoves if it is the same position as the one the user clicked on
-                if (AreSamePos(clickedPos, pos)): #if the user clicked on a valid move-end position, perform given move
+            for move in self.curValidMoves: #check foreach pos in curValidMoves if it's end pos is the same position as the one the user clicked on
+                if (AreSamePos(clickedPos, move.moveTo)): #if the user clicked on a valid move-end position, perform given move
                     print("move will be performed");
                     
                     self.selectedPiece = None; #set the selectedPiece to None, as the selectedPiece should be unselected when moved
