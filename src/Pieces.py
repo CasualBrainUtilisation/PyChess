@@ -87,8 +87,8 @@ class Pawn(ChessPiece):
         
         moves = []; #this list will later be returned and stores all the valid moves the piece has
         
-        pawnDir = (-1,1) #the direction the pawn goes to (up/down), use the pieces color as index, to get the correct one for the related piece
-        pawnStartPosY = (ChessBoardManager.ChessBoard.ROWS - 1 + pawnDir[0], 0 + pawnDir[1]) #the start position for pawn colors (white,black), again use self.color.value as index
+        pawnDir: tuple = (-1,1) #the direction the pawn goes to (up/down), use the pieces color as index, to get the correct one for the related piece
+        pawnStartPosY: tuple = (ChessBoardManager.ChessBoard.ROWS - 1 + pawnDir[0], 0 + pawnDir[1]) #the start position for pawn colors (white,black), again use self.color.value as index
         
         pieceInFront: ChessPiece = chessBoard.getPieceAtPos(ChessBoardManager.BoardPos(self.pos.x, self.pos.y + pawnDir[self.color.value])); #get the piece at the square in front of the pawn
         if pieceInFront is None: #if there is no piece at the position in front of the pawn, add it to the moves list
@@ -100,7 +100,18 @@ class Pawn(ChessPiece):
                 if pieceTwoSquaresInFront is None: #if there is no piece two squares in front of the pawn, add the move to the moves list
                     moves.append(Move(self, ChessBoardManager.BoardPos(self.pos.x, self.pos.y + pawnDir[self.color.value] * 2), Move.MoveType.DOUBLEPAWN));
             
+            
+        attackXModifiers: tuple = (-1, 1); #all the ways the pawns x.pos gets modified when tacking
         
+        for attackXModifier in attackXModifiers: #check if the attacking move is valid, foreach individual attacking move
+            
+            attackPos: ChessBoardManager.BoardPos = ChessBoardManager.BoardPos(self.pos.x + attackXModifier, self.pos.y + pawnDir[self.color.value]) #get the current attackPos we want to calculate the validation for
+            
+            if ChessBoardManager.IsPosValid(attackPos): #check if the attackPos is even on the board
+                
+                attackedPiece = chessBoard.getPieceAtPos(attackPos); #get the piece attacked from the pawn
+                if (attackedPiece is not None and attackedPiece.color != self.color): #check if the pawn even attacks a piece, after that check wether it has a different color then the pawn, meaning it can take it and the move is valid, notice that the colorCheck has to be done after the nullCheck as it would cause an expection if the piece was None, if this is true the attackMove is valid and we'll add it to the moves list
+                    moves.append(Move(self, ChessBoardManager.BoardPos(self.pos.x + attackXModifier, self.pos.y + pawnDir[self.color.value]), Move.MoveType.NORMAL)); #add the attack moves to the moves list, as it's valid
         
         return moves; #return the calculated moves
     
