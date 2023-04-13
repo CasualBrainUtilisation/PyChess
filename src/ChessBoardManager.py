@@ -69,6 +69,15 @@ class ChessBoard:
             self.selectedPiece = None; #set the selectedPiece to None, as the selectedPiece should be unselected when clicked on the board
             self.curValidMoves = []; #set the curValidMoves to an empty list, as there shouldn't be any, when reseting the selectedPiece
             
+            
+    #methods used from outside this class
+    def getPieceAtPos(self, pos): #this will return the piece in the self.pieces list at given position, if there is no piece, it'll return None instead
+        for piece in self.pieces: #check foreach piece in self.pieces if it is has the same position as the given one, if so return it
+                if (AreSamePos(piece.pos, pos)): #if given pos is the same as the one from the currently checked piece
+                    return piece; #return the piece, if it has given position
+        
+        return None; #return None as there hasn't been found any piece at given position
+            
         
             
         
