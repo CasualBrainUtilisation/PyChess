@@ -122,7 +122,16 @@ def getLineMoves(chessBoard: ChessBoardManager.ChessBoard, pos: ChessBoardManage
     pos.y += yIncr;
     
     #check foreach pos on line if valid and if so add it to the moves list
-    while (pos.x < ChessBoardManager.ChessBoard.COLUMNS and pos.x >= 0 and pos.y >= 0 and pos.y < ChessBoardManager.ChessBoard.ROWS): #check if the pos currently check for validation is even on the chessBoard
+    while (pos.x < ChessBoardManager.ChessBoard.COLUMNS and pos.x >= 0 and pos.y >= 0 and pos.y < ChessBoardManager.ChessBoard.ROWS): #check if the pos currently checked for validation is even on the chessBoard
+        
+        piece: ChessPiece = chessBoard.getPieceAtPos(pos); #get the piece at the pos currently checked for validation
+        if piece is not None: #check wether the piece variable isn't empty, if so there must be a piece at the pos currently checked for validation
+            if piece.color == chessBoard.getPieceAtPos(startPos).color: #check if the piece at the pos currently checked for validation has the same color as the piece we are getting thte lineMoves for
+                break; #break out of the while loop, as we can't move on a square with same colored pieces
+            else: #the piece at the pos currently checked for validation must have a different color, then the piece we get the lineMoves for
+                moves.append(Move(chessBoard.getPieceAtPos(startPos), copy.copy(pos), Move.MoveType.NORMAL)); #add the move, as it is valid, add a copy of the pos to the move, a reference would be modified throughout the for loop, add the move to the later returned moves list, the move type is normal, as this is just a normal line move
+                break; #as you can not continue moving on the line, after crossing a piece, break out of the while loop
+        
         moves.append(Move(chessBoard.getPieceAtPos(startPos), copy.copy(pos), Move.MoveType.NORMAL)); #add a copy of the pos to the move, a reference would be modified throughout the for loop, add the move to the later returned moves list, the move type is normal, as this is just a normal line move
         
         pos.x += xIncr;
