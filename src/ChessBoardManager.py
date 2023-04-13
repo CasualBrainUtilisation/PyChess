@@ -20,6 +20,10 @@ class ChessBoard:
         #setup the chessBoard Visuals
         self.createBoard();
         
+        #setup for piece movement
+        self.selectedPiece = None; #will store the currently selected piece if existing
+        self.curValidMoves = []; #will store the moves, the currently selected piece can perform
+        
         #pieces
         self.pieces = FEN.LoadPositionFromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"); #self.pieces represents the pieces currently on the board (they store their pos theirself), here we set it to the normal start posiiton
         self.__pieceVisualisation.updatePieceImages(); #update the piece images to show the just loaded start position
@@ -40,11 +44,33 @@ class ChessBoard:
     def boardClicked(self, event): #mehtod that'll be called every time the user clicks on a field on the chessBoard
         
         #calculate the field the user clicked on and store it in a BoardPos class
-        pos: BoardPos = BoardPos(event.x // self.CELLSIZE, event.y // self.CELLSIZE)
+        clickedPos: BoardPos = BoardPos(event.x // self.CELLSIZE, event.y // self.CELLSIZE)
         
+        if len(self.curValidMoves) > 0: #check if there are valid moves, the selected piece can do currently, if so we'll move the piece there, if the user clicked on a corresponding field
+            for pos in self.curValidMoves: #check foreach pos in curValidMoves if it is the same position as the one the user clicked on
+                if (AreSamePos(clickedPos, pos)): #if the user clicked on a valid move-end position, perform given move
+                    print("move will be performed");
+                    
+                    self.selectedPiece = None; #set the selectedPiece to None, as the selectedPiece should be unselected when moved
+                    self.curValidMoves = []; #set the curValidMoves to an empty list, as there shouldn't be any, when reseting the selectedPiece
+                    
+                    return; #end the function here so no piece are reselected and so on
+                    
+        
+        clickedOnPiece: bool = False; #check if user clicked on a piece, if so it'll be set to True in the following for-loop
         for piece in self.pieces:
-            if (AreSamePos(pos, piece.pos)): #if the piece is placed on the field clicked on
-                print(piece.getMoves(self)); #print the valid moves for the piece
+            if (AreSamePos(clickedPos, piece.pos)): #if the piece is placed on the field clicked on
+                clickedOnPiece = True; #set to True as user clicked on a piece
+                
+                self.selectedPiece = piece; #set the selected piece to the piece clicked on
+                self.curValidMoves = piece.getMoves(self); #get the curValidMoves, by getting the valid moves for the piece at clicked position
+                
+        if not clickedOnPiece: #if the user did not click on a piece we gotta reset certain values
+            self.selectedPiece = None; #set the selectedPiece to None, as the selectedPiece should be unselected when clicked on the board
+            self.curValidMoves = []; #set the curValidMoves to an empty list, as there shouldn't be any, when reseting the selectedPiece
+            
+        
+            
         
     
     
