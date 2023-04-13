@@ -128,3 +128,7 @@ def getLineMoves(pos: ChessBoardManager.BoardPos, xIncr: int, yIncr: int) -> lis
         
         
     return moves; #finally return the moves list
+
+
+class Move: #class that stores move endPos and moveType, the move Type is quite important for performing moves like en passant and castling
+    pass;
