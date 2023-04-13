@@ -39,8 +39,12 @@ class ChessBoard:
     
     def boardClicked(self, event): #mehtod that'll be called every time the user clicks on a field on the chessBoard
         
-        #calculate the field the user clicked on
-        print(str(event.x // self.CELLSIZE) + "|" + str(event.y // self.CELLSIZE));
+        #calculate the field the user clicked on and store it in a BoardPos class
+        pos: BoardPos = BoardPos(event.x // self.CELLSIZE, event.y // self.CELLSIZE)
+        
+        for piece in self.pieces:
+            if (AreSamePos(pos, piece.pos)): #if the piece is placed on the field clicked on
+                print(piece.getMoves(self)); #print the valid moves for the piece
         
     
     
@@ -120,6 +124,13 @@ class BoardPos: #class that stores a position on the chessBoard
         self.x = x;
         self.y = y;
         
+
+def AreSamePos(pos1: BoardPos, pos2: BoardPos) -> bool: #method that checks if two BoardPos classes, store the same board position, if so returns true, else false
+    
+    if pos1.x == pos2.x and pos1.y == pos2.y: #if pos1 and pos2 are the same position return true
+        return True;
+    
+    return False; #return false as pos1 and pos2 were not the same position
        
     
 def IsPosValid(pos: BoardPos) -> bool: #returns false if the given position is not on the board, else returns true
