@@ -131,4 +131,23 @@ def getLineMoves(pos: ChessBoardManager.BoardPos, xIncr: int, yIncr: int) -> lis
 
 
 class Move: #class that stores move endPos and moveType, the move Type is quite important for performing moves like en passant and castling
+    
+    class MoveType(Enum): #enum that represents the MoveType of the chessPiece
+        NORMAL = 0; #by normal chess move that does not fall into the following categories
+        DOUBLEPAWN = 1; #move performed when a pawn moves 2 squares, this is needed for calculating en passant moves
+        EN_PASSANT = 2; #google en passant, needed to perform a given en passant move properly
+        CASTLING = 3; #any castling move, needed to perform a given castling move properly
+    
+    
+    def __init__(self, piece: ChessPiece, moveTo: ChessBoardManager.BoardPos, moveType: MoveType) -> None:
+        
+        self.pieceToMove = piece; #the piece that'll be moved, when this move was performed
+        self.moveTo = moveTo; #the position the given piece moves to
+        self.moveType = self.MoveType(moveType); #the type of move
+
+    pass;
+
+
+def performMove(move: Move): #method that'll perform given move
+    #TODO movePerform logic
     pass;
