@@ -1,0 +1,2 @@
+# ignore the pychache directory, as it is not needed for anyone to get this code to run
+src/__pycache__/
