@@ -215,7 +215,7 @@ class Move: #class that stores move endPos and moveType aswell as the piece to m
 
 def performMove(chessBoard: ChessBoardManager.ChessBoard, move: Move): #method that'll perform given move
     
-    if move.moveType == Move.MoveType.NORMAL: #if it is normal move, we'll just move the piece to the moveTo position, aswell as removing piece at the moveTo position, as it gets taken
+    if move.moveType == Move.MoveType.NORMAL or Move.MoveType.DOUBLEPAWN: #if it is normal move or a DOUBLEPAWN move (moves that do not need any special kind of movmement), we'll just move the piece to the moveTo position, aswell as removing piece at the moveTo position, as it gets taken
         
         #remove any piece at the moveTo position, as the pieceToMove will take this, this has to be run before the pieceToMove is moved to avoid deliting the pieceToMove instead
         piece: ChessPiece = chessBoard.getPieceAtPos(move.moveTo); #try to get the piece at the move to position
