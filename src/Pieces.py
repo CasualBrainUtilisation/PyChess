@@ -98,8 +98,17 @@ class King(ChessPiece):
         
     def getMoves(self, chessBoard: ChessBoardManager.ChessBoard) -> list:
         
-        moves = []; #this list will later be returned and stores all the valid moves the piece has
+        moves = [Move(self, ChessBoardManager.BoardPos(self.pos.x - 1, self.pos.y - 1), Move.MoveType.NORMAL),
+                 Move(self, ChessBoardManager.BoardPos(self.pos.x - 1, self.pos.y + 0), Move.MoveType.NORMAL),
+                 Move(self, ChessBoardManager.BoardPos(self.pos.x - 1, self.pos.y + 1), Move.MoveType.NORMAL),
+                 Move(self, ChessBoardManager.BoardPos(self.pos.x + 0, self.pos.y + 1), Move.MoveType.NORMAL),
+                 Move(self, ChessBoardManager.BoardPos(self.pos.x + 1, self.pos.y + 1), Move.MoveType.NORMAL),
+                 Move(self, ChessBoardManager.BoardPos(self.pos.x + 1, self.pos.y + 0), Move.MoveType.NORMAL),
+                 Move(self, ChessBoardManager.BoardPos(self.pos.x + 1, self.pos.y - 1), Move.MoveType.NORMAL),
+                 Move(self, ChessBoardManager.BoardPos(self.pos.x + 0, self.pos.y - 1), Move.MoveType.NORMAL),
+                 ]; #this list will later be returned and stores all the moves theoraticly possible for the king, the ones actually invalid for different reasons, will be deleted throughout this method
         
+        moves = getPossibleMovesOutOf(chessBoard, moves); #set the moves list to be only the actuall posibble moves out of itself
         
         return moves; #return the calculated moves
     
