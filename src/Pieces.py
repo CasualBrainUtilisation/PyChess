@@ -2,6 +2,7 @@
 
 from enum import Enum; #so we can use Enums, used for piece color
 import ChessBoardManager; #import the ChessBoardManager class, so we have acces to BoardPos ect.
+import copy; #needed to copy the boardPos class when calculating moves
 
 class Color(Enum): #enum used to store a piece's color
         White = 0;
@@ -22,9 +23,17 @@ class Rook(ChessPiece):
     def __init__(self, pos: ChessBoardManager.BoardPos, color: Color) -> None:
         super().__init__(pos, color, "rook");
         
-    def getMoves(chessBoard: ChessBoardManager.ChessBoard) -> list:
-        #TODO logic to get moves
-        return [super().pos];
+    def getMoves(self, chessBoard: ChessBoardManager.ChessBoard) -> list:
+        
+        moves: list = []; #this list will contain all posibble moves and'll later be returned
+            
+        #get the lien moves for each row the rook moves on
+        moves.extend(getLineMoves(copy.copy(self.pos), 1, 0))
+        moves.extend(getLineMoves(copy.copy(self.pos), -1, 0))
+        moves.extend(getLineMoves(copy.copy(self.pos), 0, 1))
+        moves.extend(getLineMoves(copy.copy(self.pos), 0, -1))
+        
+        return moves; #return the calculated moves
     
     
     
@@ -75,3 +84,25 @@ class Knight(ChessPiece):
     def getMoves(chessBoard: ChessBoardManager.ChessBoard) -> list:
         #TODO logic to get moves
         return [super().pos];
+
+
+
+
+#getting moves
+def getLineMoves(pos: ChessBoardManager.BoardPos, xIncr: int, yIncr: int) -> list: #method that'll return all the moves on a line with given gradient, in a list
+    
+    moves = []; #list that'll be returned and contains all the possible moves on the line with given gradient
+    
+    #increase the values so the startPos is not on the moves list
+    pos.x += xIncr;
+    pos.y += yIncr;
+    
+    #check foreach pos on line if valid and if so add it to the moves list
+    while (pos.x < ChessBoardManager.ChessBoard.COLUMNS and pos.x > 0 and pos.y > 0 and pos.y < ChessBoardManager.ChessBoard.ROWS):
+        moves.append(pos);
+        
+        pos.x += xIncr;
+        pos.y += yIncr;
+        
+        
+    return moves; #finally return the moves list
