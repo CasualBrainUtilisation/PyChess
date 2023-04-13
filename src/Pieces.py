@@ -21,7 +21,7 @@ class ChessPiece:
 
 class Rook(ChessPiece):
     def __init__(self, pos: ChessBoardManager.BoardPos, color: Color) -> None:
-        super().__init__(pos, color, "rook");
+        super().__init__(pos, color, "r");
         
     def getMoves(self, chessBoard: ChessBoardManager.ChessBoard) -> list:
         
@@ -39,7 +39,7 @@ class Rook(ChessPiece):
     
 class Bishop(ChessPiece):
     def __init__(self, pos: ChessBoardManager.BoardPos, color: Color) -> None:
-        super().__init__(pos, color, "bishop");
+        super().__init__(pos, color, "b");
         
     def getMoves(self, chessBoard: ChessBoardManager.ChessBoard) -> list:
         
@@ -57,7 +57,7 @@ class Bishop(ChessPiece):
 
 class Queen(ChessPiece):
     def __init__(self, pos: ChessBoardManager.BoardPos, color: Color) -> None:
-        super().__init__(pos, color, "queen");
+        super().__init__(pos, color, "q");
         
     def getMoves(self, chessBoard: ChessBoardManager.ChessBoard) -> list:
         
@@ -81,7 +81,7 @@ class Queen(ChessPiece):
     
 class Pawn(ChessPiece):
     def __init__(self, pos: ChessBoardManager.BoardPos, color: Color) -> None:
-        super().__init__(pos, color, "pawn");
+        super().__init__(pos, color, "p");
         
     def getMoves(self, chessBoard: ChessBoardManager.ChessBoard) -> list:
         #TODO logic to get moves
@@ -91,7 +91,7 @@ class Pawn(ChessPiece):
     
 class King(ChessPiece):
     def __init__(self, pos: ChessBoardManager.BoardPos, color: Color) -> None:
-        super().__init__(pos, color, "king");
+        super().__init__(pos, color, "k");
         
     def getMoves(self, chessBoard: ChessBoardManager.ChessBoard) -> list:
         #TODO logic to get moves
@@ -101,7 +101,7 @@ class King(ChessPiece):
     
 class Knight(ChessPiece):
     def __init__(self, pos: ChessBoardManager.BoardPos, color: Color) -> None:
-        super().__init__(pos, color, "knight");
+        super().__init__(pos, color, "n");
         
     def getMoves(self, chessBoard: ChessBoardManager.ChessBoard) -> list:
         #TODO logic to get moves
