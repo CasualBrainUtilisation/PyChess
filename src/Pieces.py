@@ -121,7 +121,7 @@ def getLineMoves(pos: ChessBoardManager.BoardPos, xIncr: int, yIncr: int) -> lis
     
     #check foreach pos on line if valid and if so add it to the moves list
     while (pos.x < ChessBoardManager.ChessBoard.COLUMNS and pos.x >= 0 and pos.y >= 0 and pos.y < ChessBoardManager.ChessBoard.ROWS): #check if the pos currently check for validation is even on the chessBoard
-        moves.append(pos);
+        moves.append(copy.copy(pos)); #add a copy of the pos to the moves list, a reference would be modified throughout the for loop
         
         pos.x += xIncr;
         pos.y += yIncr;
