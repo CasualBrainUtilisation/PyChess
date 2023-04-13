@@ -121,18 +121,7 @@ class Knight(ChessPiece):
                  Move(self, ChessBoardManager.BoardPos(self.pos.x - 2, self.pos.y - 1), Move.MoveType.NORMAL),
                  ]; #this list will later be returned and stores all the moves theoraticly possible for the knight, the ones actually invalid for different reasons, will be deleted throughout this method
         
-        
-        for move in moves:
-            if not ChessBoardManager.IsPosValid(move.moveTo): #if the move actually leads out of the board remove it 
-                moves.remove(move); #remove the invalid move from the moves list
-                continue; #continue with the next move, so the checks below this are not executed
-            
-            piece: ChessPiece = chessBoard.getPieceAtPos(move.moveTo); #get the piece at the move.moveTo pos currently checked for validation
-            if piece is not None: #check wether the piece variable isn't empty, if so there must be a piece at the move.moveTo pos currently checked for validation
-                if piece.color == self.color: #check if the piece at the move.moveTo pos currently checked for validation has the same color as this piece, if so it's invalid, so remove it
-                    moves.remove(move); #remove the invalid move from the moves list
-                    continue; #continue with the next move, so the checks below this are not executed
-        
+        moves = getPossibleMovesOutOf(chessBoard, moves); #set the moves list to be only the actuall posibble moves out of itself
         
         return moves; #return the calculated moves
 
@@ -168,6 +157,23 @@ def getLineMoves(chessBoard: ChessBoardManager.ChessBoard, pos: ChessBoardManage
         
         
     return moves; #finally return the moves list
+
+def getPossibleMovesOutOf(chessBoard: ChessBoardManager.ChessBoard, moves: list): #this method returns a copy of given list modified, to conatin only the actually valid moves out of the given theoretically possible ones
+    
+    checkedMoves = copy.copy(moves); #this list will later be returned, it is a copy of the given moves list, from which the actually invalid moves will be deleted throughout this method
+    
+    for move in moves:
+            if not ChessBoardManager.IsPosValid(move.moveTo): #if the move actually leads out of the board remove it 
+                checkedMoves.remove(move); #remove the invalid move from the checkedMoves list
+                continue; #continue with the next move, so the checks below this are not executed
+            
+            piece: ChessPiece = chessBoard.getPieceAtPos(move.moveTo); #get the piece at the move.moveTo pos currently checked for validation
+            if piece is not None: #check wether the piece variable isn't empty, if so there must be a piece at the move.moveTo pos currently checked for validation
+                if piece.color == move.pieceToMove.color: #check if the piece at the move.moveTo pos currently checked for validation has the same color as this piece, if so it's invalid, so remove it
+                    checkedMoves.remove(move); #remove the invalid move from the checkedMoves list
+                    continue; #continue with the next move, so the checks below this are not executed
+                
+    return checkedMoves; #return the new list, that contains all the actually valid moves, out of the given moves list
 
 
 class Move: #class that stores move endPos and moveType aswell as the piece to move, the move Type is quite important for performing moves like en passant and castling
