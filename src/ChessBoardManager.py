@@ -91,7 +91,6 @@ class PieceVisualisation: #class that will handle the images, showing the chessP
         for piece in self.__chessBoard.pieces: #update the pieceImages prpoerly, for all the pieces in the chessBoard.pieces list
             
             img: Image = Image.open(PieceVisualisation.getPieceImage(piece)); #open the image with PIL.Image #TODO let this be the actual piece image
-            print (img.mode);
             img = img.resize((self.__chessBoard.CELLSIZE, self.__chessBoard.CELLSIZE), Image.ANTIALIAS); #Resize the Image to CellSize * CellSize using PIL.Image.resize
             photoImg: PhotoImage = ImageTk.PhotoImage(img); #load the resized image as photoimage using PIL.ImageTk
             
