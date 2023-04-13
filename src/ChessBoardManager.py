@@ -127,19 +127,30 @@ class PieceVisualisation: #class that will handle the images, showing the chessP
                 self.pieceImages[row].append([canvasIMG, pieceImage]); #add the image to the board and referernce it in the  pieceImages list, also referenece the PhotoImage, to show the PhotoImage, you always have to keep a reference for some reason (took me a decade to figure out)
                 
     def updatePieceImages(self) -> None: #method that'll update the pieceImages, to show the current chessBoard.pieces
+        
+        self.clearPieceImages(); #first we need to let all pieceImages show nothing, so we won't keep old images of pieces, on fields, pieces moved away from
+        
         for piece in self.__chessBoard.pieces: #update the pieceImages prpoerly, for all the pieces in the chessBoard.pieces list
             
-            img: Image = Image.open(PieceVisualisation.getPieceImage(piece)); #open the image with PIL.Image #TODO let this be the actual piece image
+            img: Image = Image.open(PieceVisualisation.getPieceImagePath(piece)); #open the image with PIL.Image #TODO let this be the actual piece image
             img = img.resize((self.__chessBoard.CELLSIZE, self.__chessBoard.CELLSIZE), Image.ANTIALIAS); #Resize the Image to CellSize * CellSize using PIL.Image.resize
             photoImg: PhotoImage = ImageTk.PhotoImage(img); #load the resized image as photoimage using PIL.ImageTk
             
             self.pieceImages[piece.pos.y][piece.pos.x][1] = photoImg; #update the reference to the PhotoImage(), you always have to keep a reference to the photoImage of a photo on canvas, else it won't show
             self.__chessBoard.canvas.itemconfig(self.pieceImages[piece.pos.y][piece.pos.x][0], image = photoImg); #set the actual image at the piece.pos to the new 1
+            
+
+    def clearPieceImages(self) -> None: #method that will set all the piece images, to show nothing, needed so we can first of clear images, then add the ones for the new chessBoard.pieces list, without keeping old pieces
+        for pieceImageColumn in self.pieceImages: #run through all the pieceImage lists in the self.pieceImages list, notice that the self.pieceImages list is nested
+            for pieceImage in pieceImageColumn: #clear each single pieceImage, in the current pieceImage column
+                img: PhotoImage = PhotoImage(); #create blank image
+                self.__chessBoard.canvas.itemconfig(pieceImage[0], image = img); #set the current pieceImage to show the blank Image
+        
        
        
     
     @staticmethod
-    def getPieceImage(piece) -> str: #method used to get the image path for given chessPieceType
+    def getPieceImagePath(piece) -> str: #method used to get the image path for given chessPieceType
         import Pieces; #this method needs the pieces imported, to get their color and type
         
         FILE_EXT = ".png"; #the file extension for the piece images, shouhld be put into this variable
