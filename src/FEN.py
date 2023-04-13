@@ -38,22 +38,22 @@ def LoadPositionFromFEN(FEN: str) -> list: #method that'll return a list of piec
             pos: BoardPos = BoardPos(column, row); #get the currently checked position
             
             if curChar.lower() == "r": #check if the currenlty checked charater is a rook
-                pieces.append(Rook(pos, curChar.islower())) #add a rook at the currenlty checked position
+                pieces.append(Rook(pos, int(curChar.islower()))) #add a rook at the currenlty checked position
                 
             elif curChar.lower() == "b": #check if the currenlty checked charater is a bishop
-                pieces.append(Bishop(pos, curChar.islower())) #add a bishop at the currenlty checked position
+                pieces.append(Bishop(pos, int(curChar.islower()))) #add a bishop at the currenlty checked position
                 
             elif curChar.lower() == "q": #check if the currenlty checked charater is a Queen
-                pieces.append(Queen(pos, curChar.islower())) #add a Queen at the currenlty checked position
+                pieces.append(Queen(pos, int(curChar.islower()))) #add a Queen at the currenlty checked position
                 
             elif curChar.lower() == "k": #check if the currenlty checked charater is a King
-                pieces.append(King(pos, curChar.islower())) #add a King at the currenlty checked position
+                pieces.append(King(pos, int(curChar.islower()))) #add a King at the currenlty checked position
                 
             elif curChar.lower() == "p": #check if the currenlty checked charater is a Pawn
-                pieces.append(Pawn(pos, curChar.islower())) #add a Pawn at the currenlty checked position
+                pieces.append(Pawn(pos, int(curChar.islower()))) #add a Pawn at the currenlty checked position
                 
             elif curChar.lower() == "n": #check if the currenlty checked charater is a Knight
-                pieces.append(Knight(pos, curChar.islower())) #add a Knight at the currenlty checked position
+                pieces.append(Knight(pos, int(curChar.islower()))) #add a Knight at the currenlty checked position
                 
             else:
                 print("invalid letter at " + "ind : " + str(index) + " pos : " + str(row) + "|" + str(column))

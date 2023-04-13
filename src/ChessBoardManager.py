@@ -47,7 +47,7 @@ class ChessBoard:
 
 class FieldHandler: #class that handles all the fields of a chess board
     #consts
-    COLORS: tuple = ("white", "black") #colors used for the fields on the board
+    COLORS: tuple = ("white", "#1A1A1A") #colors used for the fields on the board, fields can not be pure black, as then they would hide the piece images
     
     def __init__(self, chessBoard: ChessBoard) -> None:
         #from def
@@ -86,12 +86,27 @@ class PieceVisualisation: #class that will handle the images, showing the chessP
     def updatePieceImages(self) -> None: #method that'll update the pieceImages, to show the current chessBoard.pieces
         for piece in self.__chessBoard.pieces: #update the pieceImages prpoerly, for all the pieces in the chessBoard.pieces list
             
-            img: Image = Image.open("src\\images\\pieces\\bb.png"); #open the image with PIL.Image #TODO let this be the actual piece image
+            img: Image = Image.open(PieceVisualisation.getPieceImage(piece)); #open the image with PIL.Image #TODO let this be the actual piece image
+            print (img.mode);
             img = img.resize((self.__chessBoard.CELLSIZE, self.__chessBoard.CELLSIZE), Image.ANTIALIAS); #Resize the Image to CellSize * CellSize using PIL.Image.resize
             photoImg: PhotoImage = ImageTk.PhotoImage(img); #load the resized image as photoimage using PIL.ImageTk
             
             self.pieceImages[piece.pos.y][piece.pos.x][1] = photoImg; #update the reference to the PhotoImage(), you always have to keep a reference to the photoImage of a photo on canvas, else it won't show
             self.__chessBoard.canvas.itemconfig(self.pieceImages[piece.pos.y][piece.pos.x][0], image = photoImg); #set the actual image at the piece.pos to the new 1
+       
+       
+    
+    @staticmethod
+    def getPieceImage(piece) -> str: #method used to get the image path for given chessPieceType
+        import Pieces; #this method needs the pieces imported, to get their color and type
+        
+        FILE_EXT = ".png"; #the file extension for the piece images, shouhld be put into this variable
+        START_PATH = "src\\images\\pieces\\"; #the start of the pieceImagePath, it leads to the dir all the piece images are stored in
+        
+        colorChar = str(piece.color.name)[0].lower(); #the character of the pieceImage that represents the piece color, 'w' for white, 'b' for black, this can be aquired by getting the first character of the piece.color.
+        pieceChar = piece.name[0]; #the character representing the pieceType in the pieceImage name, this can be get by getting the first character of the piece.name.
+        
+        return START_PATH + colorChar + pieceChar + FILE_EXT; #return the full image path
             
             
                 
