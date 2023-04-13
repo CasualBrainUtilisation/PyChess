@@ -58,6 +58,8 @@ def LoadPositionFromFEN(FEN: str) -> list: #method that'll return a list of piec
             else:
                 print("invalid letter at " + "ind : " + str(index) + " pos : " + str(row) + "|" + str(column))
                 return None; #the character wasn't valid, so the FEN is invalid, we'll return None
+            
+            column += 1; #increase the column as a piece has been added
         
         elif curChar.isnumeric(): #if the currenctly checked character is a number, we'll add that to the currently checked column (that's how FENs work)
             column += int(curChar);

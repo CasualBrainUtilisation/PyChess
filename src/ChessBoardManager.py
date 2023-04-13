@@ -1,5 +1,6 @@
 from tkinter import *; #import the tkinter module
 import FEN; #needed to load pieces from FEN
+from PIL import Image, ImageTk; #this module is needed to resize images
 
 class ChessBoard:
     #consts
@@ -22,6 +23,9 @@ class ChessBoard:
         #pieces
         self.pieces = FEN.LoadPositionFromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"); #self.pieces represents the pieces currently on the board (they store their pos theirself), here we set it to the normal start posiiton
         self.__pieceVisualisation.updatePieceImages(); #update the piece images to show the just loaded start position
+        
+        for piece in self.pieces:
+            print(str(piece.pos.x) + "|" + str(piece.pos.y));
         
         
     def createBoard(self): #method that creates a canvas on the self.window, that'll contain the chessBoard
@@ -84,10 +88,13 @@ class PieceVisualisation: #class that will handle the images, showing the chessP
                 
     def updatePieceImages(self) -> None: #method that'll update the pieceImages, to show the current chessBoard.pieces
         for piece in self.__chessBoard.pieces: #update the pieceImages prpoerly, for all the pieces in the chessBoard.pieces list
-            img = PhotoImage(file = "src\\images\\pieces\\bb.png"); #TODO let this be the actual piece image
             
-            self.pieceImages[piece.pos.y][piece.pos.x][1] = img; #update the reference to the PhotoImage(), you always have to keep a reference to the photoImage of a photo on canvas, else it won't show
-            self.__chessBoard.canvas.itemconfig(self.pieceImages[piece.pos.y][piece.pos.x][0], image = img); #set the actual image at the piece.pos to the new 1
+            img: Image = Image.open("src\\images\\pieces\\bb.png"); #open the image with PIL.Image #TODO let this be the actual piece image
+            img = img.resize((self.__chessBoard.CELLSIZE, self.__chessBoard.CELLSIZE), Image.ANTIALIAS); #Resize the Image to CellSize * CellSize using PIL.Image.resize
+            photoImg: PhotoImage = ImageTk.PhotoImage(img); #load the resized image as photoimage using PIL.ImageTk
+            
+            self.pieceImages[piece.pos.y][piece.pos.x][1] = photoImg; #update the reference to the PhotoImage(), you always have to keep a reference to the photoImage of a photo on canvas, else it won't show
+            self.__chessBoard.canvas.itemconfig(self.pieceImages[piece.pos.y][piece.pos.x][0], image = photoImg); #set the actual image at the piece.pos to the new 1
             
             
                 
