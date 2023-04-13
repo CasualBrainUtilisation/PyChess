@@ -77,7 +77,7 @@ class ChessBoard:
 
 class FieldHandler: #class that handles all the fields of a chess board
     #consts
-    COLORS: tuple = ("white", "#1A1A1A") #colors used for the fields on the board, fields can not be pure black, as then they would hide the piece images
+    COLORS: tuple = ("#BDBDBD", "#3D3D3D") #colors used for the fields on the board, fields can not be pure black, as then they would hide the piece images
     
     def __init__(self, chessBoard: ChessBoard) -> None:
         #from def
