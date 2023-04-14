@@ -253,8 +253,6 @@ def performMove(chessBoard: ChessBoardManager.ChessBoard, move: Move) -> None: #
         
         move.pieceToMove.pos = move.moveTo; #move the pieceToMove to the moveTo position
         
-        print(isKingInCheckOfColor(chessBoard, chessBoard.getPieceAtPos(move.moveTo).color));
-        
 def getAllMovesOf(chessBoard: ChessBoardManager.ChessBoard, color: Color) -> list: #method that returns a list of all the moves all pieces of given color are able to perform, it returns an empty list, if there are no moves
     
     moves: list = [];  #list that'll be returned and'll contain all possible moves of given color
