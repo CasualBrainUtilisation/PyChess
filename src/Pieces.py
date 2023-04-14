@@ -92,13 +92,13 @@ class Pawn(ChessPiece):
         
         pieceInFront: ChessPiece = chessBoard.getPieceAtPos(ChessBoardManager.BoardPos(self.pos.x, self.pos.y + pawnDir[self.color.value])); #get the piece at the square in front of the pawn
         if pieceInFront is None: #if there is no piece at the position in front of the pawn, add it to the moves list
-            moves.append(Move(self, ChessBoardManager.BoardPos(self.pos.x, self.pos.y + pawnDir[self.color.value]), Move.MoveType.NORMAL));
+            moves.append(Move(self.pos, ChessBoardManager.BoardPos(self.pos.x, self.pos.y + pawnDir[self.color.value]), Move.MoveType.NORMAL));
             
             if self.pos.y == pawnStartPosY[self.color.value]: #only if the pawn still is on its starting square we'll check if a double pawn move is possible
                 #now we check if the pawn can perform a double move, notice that it can only ever do so, if it also can perform a single move
                 pieceTwoSquaresInFront =  chessBoard.getPieceAtPos(ChessBoardManager.BoardPos(self.pos.x, self.pos.y + pawnDir[self.color.value] * 2)); #get the piece two squares in front of the pawn
                 if pieceTwoSquaresInFront is None: #if there is no piece two squares in front of the pawn, add the move to the moves list
-                    moves.append(Move(self, ChessBoardManager.BoardPos(self.pos.x, self.pos.y + pawnDir[self.color.value] * 2), Move.MoveType.DOUBLEPAWN));
+                    moves.append(Move(self.pos, ChessBoardManager.BoardPos(self.pos.x, self.pos.y + pawnDir[self.color.value] * 2), Move.MoveType.DOUBLEPAWN));
             
             
         attackXModifiers: tuple = (-1, 1); #all the ways the pawns x.pos gets modified when tacking
@@ -111,7 +111,7 @@ class Pawn(ChessPiece):
                 
                 attackedPiece = chessBoard.getPieceAtPos(attackPos); #get the piece attacked from the pawn
                 if (attackedPiece is not None and attackedPiece.color != self.color): #check if the pawn even attacks a piece, after that check wether it has a different color then the pawn, meaning it can take it and the move is valid, notice that the colorCheck has to be done after the nullCheck as it would cause an expection if the piece was None, if this is true the attackMove is valid and we'll add it to the moves list
-                    moves.append(Move(self, ChessBoardManager.BoardPos(self.pos.x + attackXModifier, self.pos.y + pawnDir[self.color.value]), Move.MoveType.NORMAL)); #add the attack moves to the moves list, as it's valid
+                    moves.append(Move(self.pos, ChessBoardManager.BoardPos(self.pos.x + attackXModifier, self.pos.y + pawnDir[self.color.value]), Move.MoveType.NORMAL)); #add the attack moves to the moves list, as it's valid
         
         return moves; #return the calculated moves
     
@@ -123,14 +123,14 @@ class King(ChessPiece):
         
     def getMoves(self, chessBoard: ChessBoardManager.ChessBoard) -> list:
         
-        moves = [Move(self, ChessBoardManager.BoardPos(self.pos.x - 1, self.pos.y - 1), Move.MoveType.NORMAL),
-                 Move(self, ChessBoardManager.BoardPos(self.pos.x - 1, self.pos.y + 0), Move.MoveType.NORMAL),
-                 Move(self, ChessBoardManager.BoardPos(self.pos.x - 1, self.pos.y + 1), Move.MoveType.NORMAL),
-                 Move(self, ChessBoardManager.BoardPos(self.pos.x + 0, self.pos.y + 1), Move.MoveType.NORMAL),
-                 Move(self, ChessBoardManager.BoardPos(self.pos.x + 1, self.pos.y + 1), Move.MoveType.NORMAL),
-                 Move(self, ChessBoardManager.BoardPos(self.pos.x + 1, self.pos.y + 0), Move.MoveType.NORMAL),
-                 Move(self, ChessBoardManager.BoardPos(self.pos.x + 1, self.pos.y - 1), Move.MoveType.NORMAL),
-                 Move(self, ChessBoardManager.BoardPos(self.pos.x + 0, self.pos.y - 1), Move.MoveType.NORMAL),
+        moves = [Move(self.pos, ChessBoardManager.BoardPos(self.pos.x - 1, self.pos.y - 1), Move.MoveType.NORMAL),
+                 Move(self.pos, ChessBoardManager.BoardPos(self.pos.x - 1, self.pos.y + 0), Move.MoveType.NORMAL),
+                 Move(self.pos, ChessBoardManager.BoardPos(self.pos.x - 1, self.pos.y + 1), Move.MoveType.NORMAL),
+                 Move(self.pos, ChessBoardManager.BoardPos(self.pos.x + 0, self.pos.y + 1), Move.MoveType.NORMAL),
+                 Move(self.pos, ChessBoardManager.BoardPos(self.pos.x + 1, self.pos.y + 1), Move.MoveType.NORMAL),
+                 Move(self.pos, ChessBoardManager.BoardPos(self.pos.x + 1, self.pos.y + 0), Move.MoveType.NORMAL),
+                 Move(self.pos, ChessBoardManager.BoardPos(self.pos.x + 1, self.pos.y - 1), Move.MoveType.NORMAL),
+                 Move(self.pos, ChessBoardManager.BoardPos(self.pos.x + 0, self.pos.y - 1), Move.MoveType.NORMAL),
                  ]; #this list will later be returned and stores all the moves theoraticly possible for the king, the ones actually invalid for different reasons, will be deleted throughout this method
         
         moves = getPossibleMovesOutOf(chessBoard, moves); #set the moves list to be only the actuall posibble moves out of itself
@@ -145,14 +145,14 @@ class Knight(ChessPiece):
         
     def getMoves(self, chessBoard: ChessBoardManager.ChessBoard) -> list:
         
-        moves = [Move(self, ChessBoardManager.BoardPos(self.pos.x - 2, self.pos.y + 1), Move.MoveType.NORMAL),
-                 Move(self, ChessBoardManager.BoardPos(self.pos.x - 1, self.pos.y + 2), Move.MoveType.NORMAL),
-                 Move(self, ChessBoardManager.BoardPos(self.pos.x + 1, self.pos.y + 2), Move.MoveType.NORMAL),
-                 Move(self, ChessBoardManager.BoardPos(self.pos.x + 2, self.pos.y + 1), Move.MoveType.NORMAL),
-                 Move(self, ChessBoardManager.BoardPos(self.pos.x + 2, self.pos.y - 1), Move.MoveType.NORMAL),
-                 Move(self, ChessBoardManager.BoardPos(self.pos.x - 1, self.pos.y - 2), Move.MoveType.NORMAL),
-                 Move(self, ChessBoardManager.BoardPos(self.pos.x + 1, self.pos.y - 2), Move.MoveType.NORMAL),
-                 Move(self, ChessBoardManager.BoardPos(self.pos.x - 2, self.pos.y - 1), Move.MoveType.NORMAL),
+        moves = [Move(self.pos, ChessBoardManager.BoardPos(self.pos.x - 2, self.pos.y + 1), Move.MoveType.NORMAL),
+                 Move(self.pos, ChessBoardManager.BoardPos(self.pos.x - 1, self.pos.y + 2), Move.MoveType.NORMAL),
+                 Move(self.pos, ChessBoardManager.BoardPos(self.pos.x + 1, self.pos.y + 2), Move.MoveType.NORMAL),
+                 Move(self.pos, ChessBoardManager.BoardPos(self.pos.x + 2, self.pos.y + 1), Move.MoveType.NORMAL),
+                 Move(self.pos, ChessBoardManager.BoardPos(self.pos.x + 2, self.pos.y - 1), Move.MoveType.NORMAL),
+                 Move(self.pos, ChessBoardManager.BoardPos(self.pos.x - 1, self.pos.y - 2), Move.MoveType.NORMAL),
+                 Move(self.pos, ChessBoardManager.BoardPos(self.pos.x + 1, self.pos.y - 2), Move.MoveType.NORMAL),
+                 Move(self.pos, ChessBoardManager.BoardPos(self.pos.x - 2, self.pos.y - 1), Move.MoveType.NORMAL),
                  ]; #this list will later be returned and stores all the moves theoraticly possible for the knight, the ones actually invalid for different reasons, will be deleted throughout this method
         
         moves = getPossibleMovesOutOf(chessBoard, moves); #set the moves list to be only the actuall posibble moves out of itself
@@ -181,10 +181,10 @@ def getLineMoves(chessBoard: ChessBoardManager.ChessBoard, pos: ChessBoardManage
             if piece.color == chessBoard.getPieceAtPos(startPos).color: #check if the piece at the pos currently checked for validation has the same color as the piece we are getting thte lineMoves for
                 break; #break out of the while loop, as we can't move on a square with same colored pieces
             else: #the piece at the pos currently checked for validation must have a different color, then the piece we get the lineMoves for
-                moves.append(Move(chessBoard.getPieceAtPos(startPos), copy.copy(pos), Move.MoveType.NORMAL)); #add the move, as it is valid, add a copy of the pos to the move, a reference would be modified throughout the for loop, add the move to the later returned moves list, the move type is normal, as this is just a normal line move
+                moves.append(Move(startPos, copy.copy(pos), Move.MoveType.NORMAL)); #add the move, as it is valid, add a copy of the pos to the move, a reference would be modified throughout the for loop, add the move to the later returned moves list, the move type is normal, as this is just a normal line move
                 break; #as you can not continue moving on the line, after crossing a piece, break out of the while loop
         
-        moves.append(Move(chessBoard.getPieceAtPos(startPos), copy.copy(pos), Move.MoveType.NORMAL)); #add a copy of the pos to the move, a reference would be modified throughout the for loop, add the move to the later returned moves list, the move type is normal, as this is just a normal line move
+        moves.append(Move(startPos, copy.copy(pos), Move.MoveType.NORMAL)); #add a copy of the pos to the move, a reference would be modified throughout the for loop, add the move to the later returned moves list, the move type is normal, as this is just a normal line move
         
         pos.x += xIncr;
         pos.y += yIncr;
@@ -203,7 +203,7 @@ def getPossibleMovesOutOf(chessBoard: ChessBoardManager.ChessBoard, moves: list)
             
             piece: ChessPiece = chessBoard.getPieceAtPos(move.moveTo); #get the piece at the move.moveTo pos currently checked for validation
             if piece is not None: #check wether the piece variable isn't empty, if so there must be a piece at the move.moveTo pos currently checked for validation
-                if piece.color == move.pieceToMove.color: #check if the piece at the move.moveTo pos currently checked for validation has the same color as this piece, if so it's invalid, so remove it
+                if piece.color == chessBoard.getPieceAtPos(move.startPos).color: #check if the piece at the move.moveTo pos currently checked for validation has the same color as the piece we move from the st, if so it's invalid, so remove it
                     checkedMoves.remove(move); #remove the invalid move from the checkedMoves list
                     continue; #continue with the next move, so the checks below this are not executed
                 
@@ -215,10 +215,10 @@ def removeMovesInvalidCuzCheck(chessBoard: ChessBoardManager.ChessBoard, moves: 
     
     for moveToCheck in moves: #check each move for invalidation cuz it causes check on the pieceToMove's king
         
-        piecesBackUp = copy.copy(chessBoard.pieces); #create a copy of the moves list, to set the chessBoard.pieces back to after performing test moves, notice that this shall not be deepcopy but copy, as we do want to keep the piece references
+        piecesBackUp = copy.deepcopy(chessBoard.pieces); #create a copy of the moves list, to set the chessBoard.pieces back to after performing test moves, notice that this has to be deepcopy, as the piece pos will be modified
         
         performMove(chessBoard, moveToCheck); #perform the move on the chessBoard
-        if isKingInCheckOfColor(chessBoard, moveToCheck.pieceToMove.color): #check if the king of the moving piece is checked after the move was performed
+        if isKingInCheckOfColor(chessBoard, chessBoard.getPieceAtPos(moveToCheck.moveTo).color): #check if the king of the moved piece is checked after the move was performed
             movesChecked.remove(moveToCheck); #remove the moveToCheck, as it causes a check on the own king, which makes it invalid, notice that this has to be removed from the movesChecked list, not the moves list, as we wan to return that one
         
         chessBoard.pieces = piecesBackUp; #set the chessBoard pieces back to the version we had before performing test moves
@@ -235,10 +235,10 @@ class Move: #class that stores move endPos and moveType aswell as the piece to m
         CASTLING = 3; #any castling move, needed to perform a given castling move properly
     
     
-    def __init__(self, piece: ChessPiece, moveTo: ChessBoardManager.BoardPos, moveType: MoveType) -> None:
+    def __init__(self, startPos: ChessBoardManager.BoardPos, moveTo: ChessBoardManager.BoardPos, moveType: MoveType) -> None:
         
-        self.pieceToMove = piece; #the piece that'll be moved, when this move was performed
-        self.moveTo = moveTo; #the position the given piece moves to
+        self.startPos = startPos; #the start position, of the move, the piece at there will be moved
+        self.moveTo = moveTo; #the position the piece at the startPos will be moved to
         self.moveType = self.MoveType(moveType); #the type of move
 
 
@@ -251,7 +251,7 @@ def performMove(chessBoard: ChessBoardManager.ChessBoard, move: Move) -> None: #
         if piece is not None: #if there was a piece at the moveTo position, remove it from the chessBoard.pieces list, so it got taken
             chessBoard.pieces.remove(piece); #remove piece from the chessBoard.pieces list, so it got taken
         
-        move.pieceToMove.pos = move.moveTo; #move the pieceToMove to the moveTo position
+        chessBoard.getPieceAtPos(move.startPos).pos = move.moveTo; #move the pieceToMove to the moveTo position
         
 def getAllMovesOf(chessBoard: ChessBoardManager.ChessBoard, color: Color) -> list: #method that returns a list of all the moves all pieces of given color are able to perform, it returns an empty list, if there are no moves
     
