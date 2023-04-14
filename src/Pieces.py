@@ -262,6 +262,6 @@ def isKingInCheckOfColor(chessBoard: ChessBoardManager.ChessBoard, color: Color)
     
     for opponentMove in opponentMoves: #check for each move in the opponentMoves wether it sets the king in check, if so we return true, as the king is cheked
         if ChessBoardManager.AreSamePos(opponentMove.moveTo, kingOfColor.pos): #if the opponentMove ends on the king's position, the king is checked, return true
-            return True; #return True as the king is cheked
+            return True; #return True as the king is checked
         
     return False; #return False as no check was found
