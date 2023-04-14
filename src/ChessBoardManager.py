@@ -68,6 +68,8 @@ class ChessBoard:
                 
                 self.selectedPiece = piece; #set the selected piece to the piece clicked on
                 self.curValidMoves = piece.getMoves(self); #get the curValidMoves, by getting the valid moves for the piece at clicked position
+                import Pieces; #import pieces to check moves for invalidation, because they cause a check on their own king
+                self.curValidMoves = Pieces.removeMovesInvalidCuzCheck(self, self.curValidMoves); #check the curValidMoves for invalidation as they cause a check on their own king
                 
         if not clickedOnPiece: #if the user did not click on a piece we gotta reset certain values
             self.selectedPiece = None; #set the selectedPiece to None, as the selectedPiece should be unselected when clicked on the board
