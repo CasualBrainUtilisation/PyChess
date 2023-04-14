@@ -248,3 +248,18 @@ def getAllMovesOf(chessBoard: ChessBoardManager.ChessBoard, color: Color) -> lis
             
     
     return moves; #return the calculated list of all possbile moves for given color
+
+
+#Check
+def isKingInCheckOfColor(chessBoard: ChessBoardManager.ChessBoard, color: Color) -> bool: #method that checks wether the king of given color is checked on given chessBoard, if so it returns true, else false
+    
+    kingOfColor: ChessPiece = chessBoard.getKingOf(color); #get the king of the given color
+    
+    opponentColor: Color = Color(1 - color.value); #get the color of the opponent, which is simply the only other color in the enum, so it can be determinated by using 1 - Color
+    opponentMoves: list = getAllMovesOf(chessBoard, opponentColor); #get all the moves for the pieces of the opponentColor
+    
+    for opponentMoves in opponentMoves: #check for each move in the opponentMoves wether it sets the king in check, if so we return true, as the king is cheked
+        if opponentMoves.moveTo == kingOfColor.pos: #if the opponentMove ends on the king's position, the king is checked, return true
+            return True; #return True as the king is cheked
+        
+    return False; #return False as no check was found
