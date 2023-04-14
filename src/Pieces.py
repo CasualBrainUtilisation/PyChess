@@ -192,7 +192,7 @@ def getLineMoves(chessBoard: ChessBoardManager.ChessBoard, pos: ChessBoardManage
         
     return moves; #finally return the moves list
 
-def getPossibleMovesOutOf(chessBoard: ChessBoardManager.ChessBoard, moves: list): #this method returns a copy of given list modified, to conatin only the actually valid moves out of the given theoretically possible ones
+def getPossibleMovesOutOf(chessBoard: ChessBoardManager.ChessBoard, moves: list) -> list: #this method returns a copy of given list modified, to conatin only the actually valid moves out of the given theoretically possible ones
     
     checkedMoves = copy.copy(moves); #this list will later be returned, it is a copy of the given moves list, from which the actually invalid moves will be deleted throughout this method
     
@@ -226,7 +226,7 @@ class Move: #class that stores move endPos and moveType aswell as the piece to m
         self.moveType = self.MoveType(moveType); #the type of move
 
 
-def performMove(chessBoard: ChessBoardManager.ChessBoard, move: Move): #method that'll perform given move
+def performMove(chessBoard: ChessBoardManager.ChessBoard, move: Move) -> None: #method that'll perform given move
     
     if move.moveType == Move.MoveType.NORMAL or Move.MoveType.DOUBLEPAWN: #if it is normal move or a DOUBLEPAWN move (moves that do not need any special kind of movmement), we'll just move the piece to the moveTo position, aswell as removing piece at the moveTo position, as it gets taken
         
