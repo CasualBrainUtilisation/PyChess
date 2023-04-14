@@ -81,6 +81,14 @@ class ChessBoard:
                     return piece; #return the piece, if it has given position
         
         return None; #return None as there hasn't been found any piece at given position
+    
+    def getKingOf(self, color): #method that returns the king of specified color on the moves lists
+        import Pieces; #we need thsi to check wether a piece is a king or not
+        for piece in self.pieces:
+            if (isinstance(piece, Pieces.King) and piece.color == color): #if the piece is of type king and has the given color, return it
+                return piece;
+            
+        return None; #return None as there was no King piece with given color found
             
         
             
