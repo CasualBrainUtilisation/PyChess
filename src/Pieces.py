@@ -236,3 +236,15 @@ def performMove(chessBoard: ChessBoardManager.ChessBoard, move: Move) -> None: #
             chessBoard.pieces.remove(piece); #remove piece from the chessBoard.pieces list, so it got taken
         
         move.pieceToMove.pos = move.moveTo; #move the pieceToMove to the moveTo position
+        
+def getAllMovesOf(chessBoard: ChessBoardManager.ChessBoard, color: Color) -> list: #method that returns a list of all the moves all pieces of given color are able to perform, it returns an empty list, if there are no moves
+    
+    moves: list = [];  #list that'll be returned and'll contain all possible moves of given color
+    
+    
+    for piece in chessBoard.pieces: #check for all the current pieces on given chessBoard
+        if piece.color == color: #if the piece has the given color, we want to get all moves from
+            moves.extend(piece.getMoves()); # add the moves possible for the piece of given color and add them to the later returned moves list
+            
+    
+    return moves; #return the calculated list of all possbile moves for given color
