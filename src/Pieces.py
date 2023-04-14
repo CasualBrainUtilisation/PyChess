@@ -237,6 +237,8 @@ def performMove(chessBoard: ChessBoardManager.ChessBoard, move: Move) -> None: #
         
         move.pieceToMove.pos = move.moveTo; #move the pieceToMove to the moveTo position
         
+        print(isKingInCheckOfColor(chessBoard, chessBoard.getPieceAtPos(move.moveTo).color));
+        
 def getAllMovesOf(chessBoard: ChessBoardManager.ChessBoard, color: Color) -> list: #method that returns a list of all the moves all pieces of given color are able to perform, it returns an empty list, if there are no moves
     
     moves: list = [];  #list that'll be returned and'll contain all possible moves of given color
@@ -244,7 +246,7 @@ def getAllMovesOf(chessBoard: ChessBoardManager.ChessBoard, color: Color) -> lis
     
     for piece in chessBoard.pieces: #check for all the current pieces on given chessBoard
         if piece.color == color: #if the piece has the given color, we want to get all moves from
-            moves.extend(piece.getMoves()); # add the moves possible for the piece of given color and add them to the later returned moves list
+            moves.extend(piece.getMoves(chessBoard)); # add the moves possible for the piece on given chessBoard of given color and add them to the later returned moves list
             
     
     return moves; #return the calculated list of all possbile moves for given color
@@ -258,8 +260,8 @@ def isKingInCheckOfColor(chessBoard: ChessBoardManager.ChessBoard, color: Color)
     opponentColor: Color = Color(1 - color.value); #get the color of the opponent, which is simply the only other color in the enum, so it can be determinated by using 1 - Color
     opponentMoves: list = getAllMovesOf(chessBoard, opponentColor); #get all the moves for the pieces of the opponentColor
     
-    for opponentMoves in opponentMoves: #check for each move in the opponentMoves wether it sets the king in check, if so we return true, as the king is cheked
-        if opponentMoves.moveTo == kingOfColor.pos: #if the opponentMove ends on the king's position, the king is checked, return true
+    for opponentMove in opponentMoves: #check for each move in the opponentMoves wether it sets the king in check, if so we return true, as the king is cheked
+        if ChessBoardManager.AreSamePos(opponentMove.moveTo, kingOfColor.pos): #if the opponentMove ends on the king's position, the king is checked, return true
             return True; #return True as the king is cheked
         
     return False; #return False as no check was found
