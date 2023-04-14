@@ -209,6 +209,22 @@ def getPossibleMovesOutOf(chessBoard: ChessBoardManager.ChessBoard, moves: list)
                 
     return checkedMoves; #return the new list, that contains all the actually valid moves, out of the given moves list
 
+def removeMovesInvalidCuzCheck(chessBoard: ChessBoardManager.ChessBoard, moves: list) -> list: #method that returns a copy of given list, modified to only caontain moves, that are not causing check on their own king
+
+    movesChecked = copy.copy(moves); #create a copy of the moves list, which later will be returned as the moves list, with the invalid check causing moves removed
+    
+    for moveToCheck in moves: #check each move for invalidation cuz it causes check on the pieceToMove's king
+        
+        piecesBackUp = copy.copy(chessBoard.pieces); #create a copy of the moves list, to set the chessBoard.pieces back to after performing test moves, notice that this shall not be deepcopy but copy, as we do want to keep the piece references
+        
+        performMove(chessBoard, moveToCheck); #perform the move on the chessBoard
+        if isKingInCheckOfColor(chessBoard, moveToCheck.pieceToMove.color): #check if the king of the moving piece is checked after the move was performed
+            movesChecked.remove(moveToCheck); #remove the moveToCheck, as it causes a check on the own king, which makes it invalid, notice that this has to be removed from the movesChecked list, not the moves list, as we wan to return that one
+        
+        chessBoard.pieces = piecesBackUp; #set the chessBoard pieces back to the version we had before performing test moves
+        
+    return movesChecked; #return the list of the checked moves, that'll only contain moves that do not cause a check on their own king
+    
 
 class Move: #class that stores move endPos and moveType aswell as the piece to move, the move Type is quite important for performing moves like en passant and castling
     
