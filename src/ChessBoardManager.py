@@ -29,7 +29,7 @@ class ChessBoard:
         self.__pieceVisualisation.updatePieceImages(); #update the piece images to show the just loaded start position
         
         
-    def createBoard(self): #method that creates a canvas on the self.window, that'll contain the chessBoard
+    def createBoard(self) -> None: #method that creates a canvas on the self.window, that'll contain the chessBoard
         
         self.canvas = Canvas(self.WINDOW, width = self.CELLSIZE * ChessBoard.COLUMNS, height = self.CELLSIZE * ChessBoard.ROWS) #setup a canvas where field, pieces  ect. can be placed on
         self.canvas.pack(); # add the canvas to the window
@@ -41,7 +41,7 @@ class ChessBoard:
         self.__fieldHandler.createBoardFields(); #creates the fields for the chessBoard
         self.__pieceVisualisation.createImages(); #creates the images, which will show the pieces, for first those will be blank
     
-    def boardClicked(self, event): #mehtod that'll be called every time the user clicks on a field on the chessBoard
+    def boardClicked(self, event) -> None: #mehtod that'll be called every time the user clicks on a field on the chessBoard
         
         #calculate the field the user clicked on and store it in a BoardPos class
         clickedPos: BoardPos = BoardPos(event.x // self.CELLSIZE, event.y // self.CELLSIZE)
