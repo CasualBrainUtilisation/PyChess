@@ -23,6 +23,8 @@ class ChessBoard:
         #setup for piece movement
         self.selectedPiece = None; #will store the currently selected piece if existing
         self.curValidMoves = []; #will store the moves, the currently selected piece can perform
+        import Pieces; #needed to set the self.colorToMove
+        self.colorToMove = Pieces.Color.White; #set the colorToMove to White
         
         #pieces
         self.pieces = FEN.LoadPositionFromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"); #self.pieces represents the pieces currently on the board (they store their pos theirself), here we set it to the normal start posiiton
@@ -41,18 +43,20 @@ class ChessBoard:
         self.__fieldHandler.createBoardFields(); #creates the fields for the chessBoard
         self.__pieceVisualisation.createImages(); #creates the images, which will show the pieces, for first those will be blank
     
-    def boardClicked(self, event) -> None: #mehtod that'll be called every time the user clicks on a field on the chessBoard
+    def boardClicked(self, event) -> None: #method that'll be called every time the user clicks on a field on the chessBoard
         
         #calculate the field the user clicked on and store it in a BoardPos class
         clickedPos: BoardPos = BoardPos(event.x // self.CELLSIZE, event.y // self.CELLSIZE)
         
-        if len(self.curValidMoves) > 0: #check if there are valid moves, the selected piece can do currently, if so we'll move the piece there, if the user clicked on a corresponding field
+        if len(self.curValidMoves) > 0: #check if there are valid moves, the selected piece can currently perform, if so we'll move the piece there, if the user clicked on a corresponding field
             for move in self.curValidMoves: #check foreach pos in curValidMoves if it's end pos is the same position as the one the user clicked on
-                if (AreSamePos(clickedPos, move.moveTo)): #if the user clicked on a valid move-end position, perform given move
+                if (AreSamePos(clickedPos, move.moveTo) and self.colorToMove == self.getPieceAtPos(move.startPos).color): #if the user clicked on a valid move-end position and the piece at the move startPos (which should be the piece about to move) has the color that currently is on turn, perform given move
                     print("move will be performed");
                     
-                    import Pieces; #import the Pieces module to perform the move
+                    import Pieces; #import the Pieces module to perform the move and change the colorToMove
                     Pieces.performMove(self, move);
+                    self.colorToMove = Pieces.Color(1 - self.colorToMove.value); #switch the colorToMove (if 1 it'll be 0, if 0 -> 1, resulting in it swapping between White and black)
+                    
                     self.__pieceVisualisation.updatePieceImages(); #update the pieceImages to show the current position
                     
                     self.selectedPiece = None; #set the selectedPiece to None, as the selectedPiece should be unselected when moved
