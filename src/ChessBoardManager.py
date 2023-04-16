@@ -164,7 +164,7 @@ class PieceVisualisation: #class that will handle the images, showing the chessP
         import Pieces; #this method needs the pieces imported, to get their color and type
         
         FILE_EXT = ".png"; #the file extension for the piece images, shouhld be put into this variable
-        START_PATH = "src\\images\\pieces\\"; #the start of the pieceImagePath, it leads to the dir all the piece images are stored in
+        START_PATH = "src/images/pieces/"; #the start of the pieceImagePath, it leads to the dir all the piece images are stored in
         
         colorChar = str(piece.color.name)[0].lower(); #the character of the pieceImage that represents the piece color, 'w' for white, 'b' for black, this can be aquired by getting the first character of the piece.color.
         pieceChar = piece.name[0]; #the character representing the pieceType in the pieceImage name, this can be get by getting the first character of the piece.name.
