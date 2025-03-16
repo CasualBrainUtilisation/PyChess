@@ -147,7 +147,7 @@ class PieceVisualisation: #class that will handle the images, showing the chessP
         for piece in self.__chessBoard.pieces: #update the pieceImages prpoerly, for all the pieces in the chessBoard.pieces list
             
             img: Image = Image.open(PieceVisualisation.getPieceImagePath(piece)); #open the image with PIL.Image #TODO let this be the actual piece image
-            img = img.resize((self.__chessBoard.CELLSIZE, self.__chessBoard.CELLSIZE), Image.ANTIALIAS); #Resize the Image to CellSize * CellSize using PIL.Image.resize
+            img = img.resize((self.__chessBoard.CELLSIZE, self.__chessBoard.CELLSIZE), Image.LANCZOS); #Resize the Image to CellSize * CellSize using PIL.Image.resize
             photoImg: PhotoImage = ImageTk.PhotoImage(img); #load the resized image as photoimage using PIL.ImageTk
             
             self.pieceImages[piece.pos.y][piece.pos.x][1] = photoImg; #update the reference to the PhotoImage(), you always have to keep a reference to the photoImage of a photo on canvas, else it won't show
